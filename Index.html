@@ -1,70 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Portfolio</title>
 
-  <!-- STYLES -->
-  <link rel="stylesheet" href="Styles.css" />
+<head>
+    <meta charset="UTF-8" />
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="Styles.css" />
 </head>
 
 <body>
-  <main class="desk">
-    <span class="mini-note mini-center">this is my desk</span>
+    <main class="desk">
 
-    <!-- ===== CARD STACK ===== -->
-    <div class="card-stack">
-      <a class="back-card card-one">
-        <span class="card-cta">Selected work</span>
-      </a>
-      <a class="back-card card-two">
-        <span class="card-cta">Case studies</span>
-      </a>
-      <a class="back-card card-three">
-        <span class="card-cta">Experiments</span>
-      </a>
-    </div>
+        <span class="mini-note">this is my desk</span>
 
-    <!-- ===== FOLDER ===== -->
-    <div class="folder">
-      <img src="Images/mainFolder.png" alt="" class="folder-image" />
-      <div class="folder-content">
-        <h1>Welcome</h1>
-        <p>
-          Design-forward portfolio focused on clarity, restraint,
-          and intentional interaction.
-        </p>
-      </div>
-    </div>
+        <!-- ===== CARD STACK ===== -->
+        <div class="card-stack">
 
-    <span class="mini-note note-bottom">made with care</span>
+            <a href="#" class="back-card card-one" data-window="work-window">
+                <span class="card-cta">Things I’ve made</span>
+            </a>
+
+            <a href="#" class="back-card card-two" data-window="process-window">
+                <span class="card-cta">How I work</span>
+            </a>
+
+            <a href="#" class="back-card card-three" data-window="about-window">
+                <span class="card-cta">About me</span>
+            </a>
+
+        </div>
+
+        <!-- ===== FOLDER ===== -->
+        <div class="folder">
+            <img src="Images/mainFolder.png" class="folder-image" alt="">
+            <div class="folder-content">
+                <h1>Welcome</h1>
+                <p>Design-forward portfolio focused on clarity and intent.</p>
+            </div>
+        </div>
+
+        <span class="mini-note note-bottom">made with care</span>
+
+    </main>
 
     <!-- ===== WINDOWS ===== -->
+
     <div class="window" id="work-window">
-      <div class="window-bar">
-        <span>Selected work</span>
-        <button class="close">×</button>
-      </div>
-      <div class="window-body">
-        <p>Some projects I’ve worked on recently.</p>
-      </div>
+        <div class="window-bar">
+            <span>Things I’ve made</span>
+            <button class="close">×</button>
+        </div>
+        <div class="window-body">
+            <p>Add your projects here.</p>
+        </div>
+        <div class="resize-handle"></div>
     </div>
+
+                        <!-- =====  ===== -->
+
+    <div class="window" id="process-window">
+        <div class="window-bar">
+            <span>How I work</span>
+            <button class="close">×</button>
+        </div>
+        <div class="window-body">
+            <p>This section can be long and scroll.</p>
+        </div>
+        <div class="resize-handle"></div>
+
+    </div>
+                        <!-- =====  ===== -->
 
     <div class="window" id="about-window">
-      <div class="window-bar">
-        <span>About</span>
-        <button class="close">×</button>
-      </div>
-      <div class="window-body">
-        <p>
-          I design calm, intentional interfaces with a focus on
-          structure, motion, and clarity.
-        </p>
-      </div>
+        <div class="window-bar">
+            <span>About me</span>
+            <button class="close">×</button>
+        </div>
+        <div class="window-body">
+            <p>A calm, human introduction.</p>
+        </div>
+        <div class="resize-handle"></div>
     </div>
-  </main>
+                            <!-- =====  ===== -->
 
-  <!-- SCRIPT -->
-  <script src="script.js"></script>
+
+    <script src="Script.js"></script>
 </body>
+
 </html>
