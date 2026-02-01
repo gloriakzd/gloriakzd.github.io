@@ -53,8 +53,9 @@ body {
   height: 220px;
   border-radius: 16px;
   text-decoration: none;
+  color: inherit;
   cursor: pointer;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
@@ -65,17 +66,31 @@ body {
   left: 0;
   height: 2px;
   width: 100%;
-  background: rgba(255,255,255,0.6);
+  background: rgba(255, 255, 255, 0.6);
   border-radius: 16px 16px 0 0;
 }
 
-.card-one { background: #e8dcd5; top: 0; z-index: 1; }
-.card-two { background: #dfe7e3; top: 32px; z-index: 2; }
-.card-three { background: #e6e1f0; top: 64px; z-index: 3; }
+.card-one {
+  background: #e8dcd5;
+  top: 0;
+  z-index: 1;
+}
+
+.card-two {
+  background: #dfe7e3;
+  top: 32px;
+  z-index: 2;
+}
+
+.card-three {
+  background: #e6e1f0;
+  top: 64px;
+  z-index: 3;
+}
 
 .back-card:hover {
   transform: translateX(-50%) translateY(-12px);
-  box-shadow: 0 18px 35px rgba(0,0,0,0.14);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.14);
 }
 
 .card-cta {
@@ -85,8 +100,50 @@ body {
   font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  opacity: 0.6;
+  opacity: 0.75;
 }
+
+
+
+.back-card.card-one .card-cta {
+  color: #8a6f5c;
+}
+
+.back-card.card-two .card-cta {
+  color: #5f7a72;
+}
+
+.back-card.card-three .card-cta {
+  color: #6a668a;
+}
+
+
+
+/* ===== ACTIVE CARD STATE ===== */
+.back-card.active {
+  transform: translateX(-50%) translateY(-6px) scaleY(0.97) rotateX(2deg);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* subtle top highlight to fake a “bend” */
+.back-card.active::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 10px;
+  width: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.45),
+    rgba(255, 255, 255, 0)
+  );
+  border-radius: 16px 16px 0 0;
+  pointer-events: none;
+}
+
+
+
 
 /* ===== FOLDER ===== */
 .folder {
@@ -95,6 +152,62 @@ body {
   margin: -160px auto 0;
   z-index: 10;
 }
+
+/* ===== FOLDER REACTIVE STATES ===== */
+.folder {
+  transition:
+    transform 0.6s ease,
+    filter 0.6s ease,
+    box-shadow 0.6s ease;
+}
+
+/* ===== FOLDER REACTIVE STATES (STRONGER, KEEP THIS) ===== */
+.folder {
+  transition:
+    transform 0.6s ease,
+    filter 0.6s ease,
+    box-shadow 0.6s ease;
+}
+
+.folder--active {
+  filter: brightness(0.94);
+  transform: translateY(10px);
+}
+
+.folder--busy {
+  filter: brightness(0.9);
+  transform: translateY(18px);
+}
+
+
+/* ===== FOLDER TAB WIGGLE ===== */
+.folder::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 10%;
+  width: 80%;
+  height: 6px;
+  background: rgba(255,255,255,0.35);
+  border-radius: 6px;
+  opacity: 0.6;
+  pointer-events: none;
+  transform: translateX(0);
+}
+
+.folder.wiggle::before {
+  animation: tabWiggle 0.6s ease-out;
+}
+
+@keyframes tabWiggle {
+  0%   { transform: translateX(0); }
+  30%  { transform: translateX(-2px); }
+  60%  { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+
+
+
 
 .folder-image {
   width: 100%;
@@ -132,10 +245,45 @@ body {
 
   background: #f8f5f2;
   border-radius: 18px;
-  box-shadow: 0 30px 70px rgba(0,0,0,0.2);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.2);
   display: none;
   z-index: 50;
 }
+
+
+/* ===== PREVIEW WINDOW STATE ===== */
+.window.preview {
+  width: min(720px, 72vw);
+  height: min(420px, 52vh);
+}
+
+.window.preview .window-bar {
+  padding: 0.5rem 1rem;
+}
+
+.window-body details {
+  margin-bottom: 1.25rem;
+}
+
+.window-body summary {
+  cursor: pointer;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 0.5rem;
+}
+
+.window-bar .close {
+  opacity: 0.6;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.window-bar .close:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
 
 .window-bar {
   display: flex;
@@ -146,7 +294,7 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   opacity: 0.7;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .window-bar .close {
@@ -169,6 +317,23 @@ body {
   overflow-y: auto;
 }
 
+
+
+/* ===== WINDOW MODE INDICATOR ===== */
+.window-mode {
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  opacity: 0.5;
+  margin-left: auto;
+  margin-right: 0.75rem;
+  white-space: nowrap;
+}
+
+/* Full mode messaging */
+.window.full .window-mode {
+  opacity: 0.6;
+}
+
 /* resize affordance */
 .resize-handle {
   position: absolute;
@@ -182,15 +347,81 @@ body {
 
   /* subtle visibility */
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       transparent 50%,
-      rgba(0,0,0,0.15) 50%
-    );
+      rgba(0, 0, 0, 0.15) 50%);
   opacity: 0.35;
 }
 
 .resize-handle:hover {
-  background: rgba(0,0,0,0.05);
+  background: rgba(0, 0, 0, 0.05);
   border-bottom-right-radius: 18px;
+}
+
+
+/* ===== TOAST NOTIFICATION ===== */
+.ui-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(250, 248, 245, 0.95);
+  padding: 0.75rem 1.1rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 999;
+}
+
+.ui-toast.show {
+  opacity: 1;
+}
+
+/* ===== MINIMIZED WINDOW DOCK ===== */
+.window-dock {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  display: flex;
+  gap: 8px;
+  z-index: 200;
+}
+
+.dock-item {
+  background: #eee9e5;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.dock-item:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* Dock explanation note */
+.dock-hint {
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  opacity: 0.55;
+  margin-right: 6px;
+  transition: opacity 0.4s ease;
+}
+
+/* Slightly stronger toast entrance */
+.ui-toast {
+  transform: translate(-50%, 10px);
+}
+
+.ui-toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }

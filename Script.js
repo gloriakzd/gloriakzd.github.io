@@ -1,113 +1,269 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.back-card');
-    const windows = document.querySelectorAll('.window');
+  const cards = document.querySelectorAll('.back-card');
+  const windows = document.querySelectorAll('.window');
+  const folder = document.querySelector('.folder');
 
-    let topZ = 100;
+  const MAX_WINDOWS = 2;
+  const activeWindows = [];
+  const minimizedWindows = new Map();
 
-    // ---- OPEN WINDOW ----
+  const toast = document.getElementById('ui-toast');
+  const dock = document.getElementById('window-dock');
+
+  let topZ = 100;
+
+  /* ===== FOLDER STATE ===== */
+  function updateFolderState() {
+    folder.classList.remove('folder--active', 'folder--busy');
+    if (activeWindows.length === 1) folder.classList.add('folder--active');
+    if (activeWindows.length >= 2) folder.classList.add('folder--busy');
+  }
+
+  /* ===== ACTIVE CARD ===== */
+  function setActiveCard(targetWinId) {
     cards.forEach(card => {
-        card.addEventListener('click', e => {
-            e.preventDefault();
+      card.classList.toggle('active', card.dataset.window === targetWinId);
+    });
+  }
 
-            const targetId = card.dataset.window;
-            const win = document.getElementById(targetId);
-            if (!win) return;
+  /* ===== WINDOW MODE LABEL ===== */
+  function updateModeLabel(win, mode) {
+    const label = win.querySelector('.window-mode');
+    if (!label) return;
 
-            win.style.display = 'block';
+    label.textContent =
+      mode === 'full'
+        ? 'Full view · drag to reposition'
+        : 'Preview · double-click to expand';
+  }
 
-            // position near mouse
-            win.style.left = `${e.clientX - 100}px`;
-            win.style.top = `${e.clientY - 40}px`;
+  /* ===== ANCHORS ===== */
+  function getRightAnchor(preview = true) {
+    return { left: '56vw', top: '12vh', width: preview ? '600px' : '740px' };
+  }
 
-            win.style.zIndex = ++topZ;
-        });
+  function getLeftAnchor(preview = true) {
+    return { left: '6vw', top: '14vh', width: preview ? '580px' : '720px' };
+  }
+
+  function applyAnchor(win, preview = true) {
+    const anchor =
+      win.dataset.slot === 'right'
+        ? getRightAnchor(preview)
+        : getLeftAnchor(preview);
+
+    win.style.left = anchor.left;
+    win.style.top = anchor.top;
+    win.style.width = anchor.width;
+  }
+
+  /* ===== CARD CLICK ===== */
+  cards.forEach(card => {
+    card.addEventListener('click', e => {
+      e.preventDefault();
+      const win = document.getElementById(card.dataset.window);
+      if (!win) return;
+
+      if (minimizedWindows.has(win)) {
+        restoreFromDock(win);
+        setActiveCard(win.id);
+        return;
+      }
+
+      if (activeWindows.includes(win)) {
+        focusWindow(win);
+        setActiveCard(win.id);
+        return;
+      }
+
+      let slotToUse = null;
+
+      if (activeWindows.length >= MAX_WINDOWS) {
+        const oldest = activeWindows.shift();
+        slotToUse = oldest.dataset.slot;
+        animateMinimize(oldest);
+        showToast();
+      }
+
+      win.dataset.slot = slotToUse ?? (activeWindows.length === 0 ? 'right' : 'left');
+
+      openWindow(win);
+      activeWindows.push(win);
+      setActiveCard(win.id);
+      updateFolderState();
+    });
+  });
+
+  /* ===== WINDOW SETUP ===== */
+  windows.forEach(win => {
+    const closeBtn = win.querySelector('.close');
+    const bar = win.querySelector('.window-bar');
+
+    closeBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      win.style.display = 'none';
+      removeFromActive(win);
+      setActiveCard(null);
+      updateFolderState();
     });
 
-    // ---- CLOSE WINDOW ----
-    windows.forEach(win => {
-        const closeBtn = win.querySelector('.close');
-        closeBtn.addEventListener('click', () => {
-            win.style.display = 'none';
-        });
+    bar.addEventListener('dblclick', () => setFullMode(win));
 
-        win.addEventListener('mousedown', () => {
-            win.style.zIndex = ++topZ;
-        });
-
-        makeDraggable(win);
-        makeResizable(win);
+    win.addEventListener('mousedown', () => {
+      win.style.zIndex = ++topZ;
+      setActiveCard(win.id);
     });
 
-    // ---- DRAG ----
-    function makeDraggable(win) {
-        const bar = win.querySelector('.window-bar');
-        let offsetX = 0;
-        let offsetY = 0;
-        let dragging = false;
+    makeDraggable(win);
+    makeResizable(win);
+  });
 
-        bar.addEventListener('mousedown', e => {
-            dragging = true;
-            offsetX = e.clientX - win.offsetLeft;
-            offsetY = e.clientY - win.offsetTop;
-            win.style.zIndex = ++topZ;
-        });
+  /* ===== OPEN ===== */
+  function openWindow(win) {
+    setPreviewMode(win);
 
-        document.addEventListener('mousemove', e => {
-            if (!dragging) return;
-            win.style.left = `${e.clientX - offsetX}px`;
-            win.style.top = `${e.clientY - offsetY}px`;
-        });
+    win.style.display = 'block';
+    win.style.opacity = '0';
+    applyAnchor(win, true);
+    win.style.transform = 'scale(0.96)';
+    win.style.zIndex = ++topZ;
 
-        document.addEventListener('mouseup', () => {
-            dragging = false;
-        });
+    requestAnimationFrame(() => {
+      win.style.transition =
+        'transform 0.25s ease, opacity 0.25s ease, width 0.25s ease';
+      win.style.opacity = '1';
+      win.style.transform = 'scale(1)';
+    });
+  }
+
+  /* ===== PREVIEW / FULL ===== */
+  function setPreviewMode(win) {
+    win.classList.add('preview');
+    win.classList.remove('full');
+    applyAnchor(win, true);
+    updateModeLabel(win, 'preview');
+  }
+
+  function setFullMode(win) {
+    win.classList.remove('preview');
+    win.classList.add('full');
+
+    win.style.transition = 'width 0.25s ease';
+    win.style.width =
+      win.dataset.slot === 'right' ? '740px' : '720px';
+
+    updateModeLabel(win, 'full');
+  }
+
+  /* ===== MINIMIZE ===== */
+  function animateMinimize(win) {
+    if (minimizedWindows.has(win)) return;
+
+    win.style.transition =
+      'transform 0.35s ease, opacity 0.35s ease';
+    win.style.opacity = '0';
+    win.style.transform = 'translateY(40px) scale(0.9)';
+
+    setTimeout(() => {
+      win.style.display = 'none';
+      win.style.opacity = '1';
+      win.style.transform = 'none';
+      addToDock(win);
+      setActiveCard(null);
+      updateFolderState();
+    }, 350);
+  }
+
+  function addToDock(win) {
+    const item = document.createElement('div');
+    item.className = 'dock-item';
+
+    const title = win.querySelector('.window-bar span');
+    item.textContent = title ? title.textContent : 'Window';
+
+    item.addEventListener('click', () => restoreFromDock(win));
+    minimizedWindows.set(win, item);
+    dock.appendChild(item);
+  }
+
+  function restoreFromDock(win) {
+    let slotToUse = null;
+
+    if (activeWindows.length >= MAX_WINDOWS) {
+      const oldest = activeWindows.shift();
+      slotToUse = oldest.dataset.slot;
+      animateMinimize(oldest);
+      showToast();
     }
 
-    // ---- RESIZE (POSITION-AWARE BOUNDS) ----
-    function makeResizable(win) {
-        const handle = win.querySelector('.resize-handle');
-        if (!handle) return;
+    if (slotToUse) win.dataset.slot = slotToUse;
 
-        let startX, startY, startW, startH;
+    dock.removeChild(minimizedWindows.get(win));
+    minimizedWindows.delete(win);
 
-        const MIN_WIDTH = 320;
-        const MIN_HEIGHT = 220;
-        const EDGE_MARGIN = 24;
+    openWindow(win);
+    activeWindows.push(win);
+    setActiveCard(win.id);
+    updateFolderState();
+  }
 
-        handle.addEventListener('mousedown', e => {
-            e.preventDefault();
+  function focusWindow(win) {
+    win.style.zIndex = ++topZ;
+  }
 
-            startX = e.clientX;
-            startY = e.clientY;
-            startW = win.offsetWidth;
-            startH = win.offsetHeight;
+  function removeFromActive(win) {
+    const i = activeWindows.indexOf(win);
+    if (i > -1) activeWindows.splice(i, 1);
+  }
 
-            const rect = win.getBoundingClientRect();
+  function showToast() {
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3200);
+  }
 
-            const MAX_WIDTH =
-                window.innerWidth - rect.left - EDGE_MARGIN;
+  /* ===== DRAG ===== */
+  function makeDraggable(win) {
+    const bar = win.querySelector('.window-bar');
+    let offsetX = 0;
+    let offsetY = 0;
+    let dragging = false;
 
-            const MAX_HEIGHT =
-                window.innerHeight - rect.top - EDGE_MARGIN;
+    bar.addEventListener('mousedown', e => {
+      dragging = true;
+      const rect = win.getBoundingClientRect();
 
-            function resize(e) {
-                let newW = startW + (e.clientX - startX);
-                let newH = startH + (e.clientY - startY);
+      win.style.transition = 'none';
+      win.style.left = `${rect.left}px`;
+      win.style.top = `${rect.top}px`;
+      win.style.transform = 'none';
 
-                newW = Math.max(MIN_WIDTH, Math.min(newW, MAX_WIDTH));
-                newH = Math.max(MIN_HEIGHT, Math.min(newH, MAX_HEIGHT));
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+      win.style.zIndex = ++topZ;
+    });
 
-                win.style.width = newW + 'px';
-                win.style.height = newH + 'px';
-            }
+    document.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      win.style.left = `${e.clientX - offsetX}px`;
+      win.style.top = `${e.clientY - offsetY}px`;
+    });
 
-            function stop() {
-                document.removeEventListener('mousemove', resize);
-                document.removeEventListener('mouseup', stop);
-            }
+    document.addEventListener('mouseup', () => {
+      dragging = false;
+      win.style.transition = '';
+    });
+  }
 
-            document.addEventListener('mousemove', resize);
-            document.addEventListener('mouseup', stop);
-        });
-    }
+  /* ===== RESIZE ===== */
+  function makeResizable(win) {
+    const handle = win.querySelector('.resize-handle');
+    if (!handle) return;
+    handle.addEventListener('mousedown', () => setFullMode(win));
+  }
+
+  /* ===== TAB WIGGLE (ONCE) ===== */
+  requestAnimationFrame(() => {
+    folder.classList.add('wiggle');
+    setTimeout(() => folder.classList.remove('wiggle'), 700);
+  });
 });

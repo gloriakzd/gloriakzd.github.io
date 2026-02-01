@@ -42,46 +42,149 @@
 
     </main>
 
-    <!-- ===== WINDOWS ===== -->
+    <!-- ===================== -->
+    <!-- ===== WINDOWS ======= -->
+    <!-- ===================== -->
 
+    <!-- ===== WORK WINDOW ===== -->
     <div class="window" id="work-window">
         <div class="window-bar">
-            <span>Things I’ve made</span>
+            <span class="window-title">Things I’ve made</span>
+            <span class="window-mode" aria-live="polite">
+                Preview · double click to expand
+            </span>
             <button class="close">×</button>
         </div>
+
         <div class="window-body">
-            <p>Add your projects here.</p>
+
+            <details open>
+                <summary>Overview</summary>
+                <p>
+                    A selection of projects focused on interaction, systems,
+                    and thoughtful UX decisions.
+                </p>
+            </details>
+
+            <details>
+                <summary>Selected work</summary>
+                <p>
+                    Project descriptions, visuals, and links will live here.
+                </p>
+            </details>
+
+            <details>
+                <summary>Outcomes</summary>
+                <p>
+                    What shipped, what changed, and what impact the work had.
+                </p>
+            </details>
+
         </div>
+
         <div class="resize-handle"></div>
     </div>
 
-                        <!-- =====  ===== -->
-
+    <!-- ===== PROCESS WINDOW ===== -->
     <div class="window" id="process-window">
         <div class="window-bar">
-            <span>How I work</span>
+            <span class="window-title">How I work</span>
+            <span class="window-mode" aria-live="polite">
+                Preview · doubleclick to expand
+            </span>
             <button class="close">×</button>
         </div>
+
         <div class="window-body">
-            <p>This section can be long and scroll.</p>
+
+            <details open>
+                <summary>Overview</summary>
+                <p>
+                    I design by balancing clarity, exploration, and constraint.
+                    My process adapts, but my principles stay consistent.
+                </p>
+            </details>
+
+            <details>
+                <summary>Research & framing</summary>
+                <p>
+                    Understanding context, users, and constraints before
+                    committing to solutions.
+                </p>
+            </details>
+
+            <details>
+                <summary>Interaction & systems</summary>
+                <p>
+                    Designing flows and behaviors that feel calm, intentional,
+                    and respectful of attention.
+                </p>
+            </details>
+
+            <details>
+                <summary>Reflection</summary>
+                <p>
+                    Reviewing outcomes, learning from friction, and refining
+                    decisions over time.
+                </p>
+            </details>
+
         </div>
+
         <div class="resize-handle"></div>
-
     </div>
-                        <!-- =====  ===== -->
 
+    <!-- ===== ABOUT WINDOW ===== -->
     <div class="window" id="about-window">
         <div class="window-bar">
-            <span>About me</span>
+            <span class="window-title">About me</span>
+            <span class="window-mode" aria-live="polite">
+                Preview · double click to expand
+            </span>
             <button class="close">×</button>
         </div>
+
         <div class="window-body">
-            <p>A calm, human introduction.</p>
+
+            <details open>
+                <summary>Overview</summary>
+                <p>
+                    I’m a designer interested in perception, interaction,
+                    and how systems communicate intent.
+                </p>
+            </details>
+
+            <details>
+                <summary>Background</summary>
+                <p>
+                    A mix of design, experimentation, and reflective practice.
+                </p>
+            </details>
+
+            <details>
+                <summary>What I’m exploring</summary>
+                <p>
+                    Calm interfaces, spatial interaction, and human-centered systems.
+                </p>
+            </details>
+
         </div>
+
         <div class="resize-handle"></div>
     </div>
-                            <!-- =====  ===== -->
 
+    <!-- ===================== -->
+    <!-- ===== UI FEEDBACK ==== -->
+    <!-- ===================== -->
+
+    <!-- ===== NOTIFICATION ===== -->
+    <div class="ui-toast" id="ui-toast">
+        <strong>Your screen’s getting a little crowded.</strong><br>
+        Let’s give one window a break!
+    </div>
+
+    <!-- ===== MINIMIZED DOCK ===== -->
+    <div class="window-dock" id="window-dock"></div>
 
     <script src="Script.js"></script>
 </body>
