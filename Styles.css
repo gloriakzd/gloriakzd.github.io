@@ -133,11 +133,9 @@ body {
   left: 0;
   height: 10px;
   width: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.45),
-    rgba(255, 255, 255, 0)
-  );
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.45),
+      rgba(255, 255, 255, 0));
   border-radius: 16px 16px 0 0;
   pointer-events: none;
 }
@@ -188,7 +186,7 @@ body {
   left: 10%;
   width: 80%;
   height: 6px;
-  background: rgba(255,255,255,0.35);
+  background: rgba(255, 255, 255, 0.35);
   border-radius: 6px;
   opacity: 0.6;
   pointer-events: none;
@@ -200,10 +198,21 @@ body {
 }
 
 @keyframes tabWiggle {
-  0%   { transform: translateX(0); }
-  30%  { transform: translateX(-2px); }
-  60%  { transform: translateX(2px); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(0);
+  }
+
+  30% {
+    transform: translateX(-2px);
+  }
+
+  60% {
+    transform: translateX(2px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
 
@@ -424,4 +433,97 @@ body {
 .ui-toast.show {
   opacity: 1;
   transform: translate(-50%, 0);
+}
+
+
+
+
+
+
+
+/* ===== SOFT PINK HIERARCHY ===== */
+:root {
+  --accent-pink: #f2b6c1;
+}
+
+/* ===== SELECTED WORK GRID ===== */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.work-card {
+  background: #f1eeeb;
+  border-radius: 14px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 3px solid transparent;
+}
+
+.work-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+  border-top-color: var(--accent-pink);
+}
+
+.work-media {
+  height: 140px;
+  background: #e2dedb;
+  border-radius: 10px;
+  margin-bottom: 0.75rem;
+}
+
+.work-desc {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 0.5rem;
+}
+
+.work-tags span {
+  font-size: 0.6rem;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.06);
+  letter-spacing: 0.05em;
+}
+
+/* ===== PHILOSOPHY ===== */
+.philosophy details {
+  margin-bottom: 1.25rem;
+}
+
+.philo-header {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.profile-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg,
+      #e8dcd5,
+      var(--accent-pink));
+  flex-shrink: 0;
+}
+
+.contact-line {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+.contact-line a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--accent-pink);
 }
