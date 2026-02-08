@@ -57,6 +57,32 @@ document.addEventListener('DOMContentLoaded', () => {
     win.style.width = anchor.width;
   }
 
+  /* ===== PAPER LIFT REPLACE (PHYSICAL CONTINUITY) ===== */
+  function replaceWindow(oldWin, newWin) {
+    const slot = oldWin.dataset.slot;
+
+    oldWin.style.transition =
+      'transform 0.28s ease, opacity 0.28s ease';
+    oldWin.style.transform = 'translateY(-12px) scale(0.98)';
+    oldWin.style.opacity = '0';
+
+    setTimeout(() => {
+      oldWin.style.display = 'none';
+      oldWin.style.opacity = '1';
+      oldWin.style.transform = 'none';
+
+      addToDock(oldWin);        // ⭐ dock preserved
+      removeFromActive(oldWin);
+
+      newWin.dataset.slot = slot;
+      openWindow(newWin);
+      activeWindows.push(newWin);
+
+      setActiveCard(newWin.id);
+      updateFolderState();
+    }, 280);
+  }
+
   /* ===== CARD CLICK ===== */
   cards.forEach(card => {
     card.addEventListener('click', e => {
@@ -76,16 +102,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      let slotToUse = null;
-
       if (activeWindows.length >= MAX_WINDOWS) {
-        const oldest = activeWindows.shift();
-        slotToUse = oldest.dataset.slot;
-        animateMinimize(oldest);
+        const oldest = activeWindows[0];
+        replaceWindow(oldest, win);
         showToast();
+        return;
       }
 
-      win.dataset.slot = slotToUse ?? (activeWindows.length === 0 ? 'right' : 'left');
+      win.dataset.slot =
+        activeWindows.length === 0 ? 'right' : 'left';
 
       openWindow(win);
       activeWindows.push(win);
@@ -122,10 +147,16 @@ document.addEventListener('DOMContentLoaded', () => {
   function openWindow(win) {
     setPreviewMode(win);
 
+    // ⭐ remove from dock if it exists (active windows should not live in dock)
+    if (minimizedWindows.has(win)) {
+      dock.removeChild(minimizedWindows.get(win));
+      minimizedWindows.delete(win);
+    }
+
     win.style.display = 'block';
     win.style.opacity = '0';
     applyAnchor(win, true);
-    win.style.transform = 'scale(0.96)';
+    win.style.transform = 'scale(0.98)';
     win.style.zIndex = ++topZ;
 
     requestAnimationFrame(() => {
@@ -169,37 +200,44 @@ document.addEventListener('DOMContentLoaded', () => {
       win.style.opacity = '1';
       win.style.transform = 'none';
       addToDock(win);
+
+      removeFromActive(win);
+
       setActiveCard(null);
       updateFolderState();
     }, 350);
   }
 
   function addToDock(win) {
+
+    // ⭐ STOP duplicates
+    if (minimizedWindows.has(win)) return;
+
     const item = document.createElement('div');
     item.className = 'dock-item';
 
-    const title = win.querySelector('.window-bar span');
+    const title = win.querySelector('.window-title');
     item.textContent = title ? title.textContent : 'Window';
 
     item.addEventListener('click', () => restoreFromDock(win));
+
     minimizedWindows.set(win, item);
     dock.appendChild(item);
   }
 
   function restoreFromDock(win) {
-    let slotToUse = null;
-
     if (activeWindows.length >= MAX_WINDOWS) {
-      const oldest = activeWindows.shift();
-      slotToUse = oldest.dataset.slot;
-      animateMinimize(oldest);
+      const oldest = activeWindows[0];
+      replaceWindow(oldest, win);
       showToast();
+      return;
     }
-
-    if (slotToUse) win.dataset.slot = slotToUse;
 
     dock.removeChild(minimizedWindows.get(win));
     minimizedWindows.delete(win);
+
+    win.dataset.slot =
+      activeWindows.length === 0 ? 'right' : 'left';
 
     openWindow(win);
     activeWindows.push(win);
@@ -207,8 +245,13 @@ document.addEventListener('DOMContentLoaded', () => {
     updateFolderState();
   }
 
+  /* ===== FOCUS ANIMATION ===== */
   function focusWindow(win) {
     win.style.zIndex = ++topZ;
+
+    win.classList.remove('focus-pulse');
+    void win.offsetWidth;
+    win.classList.add('focus-pulse');
   }
 
   function removeFromActive(win) {
