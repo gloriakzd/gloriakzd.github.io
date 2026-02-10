@@ -3,16 +3,20 @@
 
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@300;400;700&display=swap"
+        rel="stylesheet">
     <title>Portfolio</title>
     <link rel="stylesheet" href="Styles.css" />
 </head>
 
 <body>
+
     <main class="desk">
 
-        <span class="mini-note">this is my desk</span>
-
-        <!-- ===== CARD STACK ===== -->
         <div class="card-stack">
             <a href="#" class="back-card card-one" data-window="work-window">
                 <span class="card-cta">Selected work</span>
@@ -23,11 +27,10 @@
             </a>
 
             <a href="#" class="back-card card-three" data-window="about-window">
-                <span class="card-cta">About</span>
+                <span class="card-cta">About Me</span>
             </a>
         </div>
 
-        <!-- ===== FOLDER ===== -->
         <div class="folder">
             <img src="Images/mainFolder.png" class="folder-image" alt="">
             <div class="folder-content">
@@ -36,14 +39,11 @@
             </div>
         </div>
 
-        <span class="mini-note note-bottom">made with care</span>
     </main>
 
-    <!-- ===================== -->
-    <!-- ===== WINDOWS ======= -->
-    <!-- ===================== -->
 
-    <!-- ===== SELECTED WORK ===== -->
+    <!-- ================= WINDOWS ================= -->
+
     <div class="window preview" id="work-window">
         <div class="window-bar">
             <span class="window-title">Selected Work</span>
@@ -54,44 +54,31 @@
         <div class="window-body work-grid">
 
             <article class="work-card">
-                <div class="work-media"></div>
-                <img src="Images/fintech-preview.jpg" alt="Fintech dashboard preview">
+                <div class="work-media">
+                    <img src="Images/fintech-preview.jpg" alt="">
+                </div>
                 <h3>Fintech Dashboard Redesign</h3>
                 <p class="work-desc">Improving clarity, hierarchy, and trust in data-dense interfaces.</p>
-                <div class="work-tags">
-                    <span>UX Case Study</span>
-                    <span>Systems</span>
-                    <span>Figma</span>
-                </div>
             </article>
 
             <article class="work-card">
                 <div class="work-media"></div>
                 <h3>E-Commerce Mobile App</h3>
                 <p class="work-desc">Reducing friction and guiding decisions through calm interaction.</p>
-                <div class="work-tags">
-                    <span>Product Design</span>
-                    <span>UX</span>
-                    <span>Prototype</span>
-                </div>
             </article>
 
             <article class="work-card">
                 <div class="work-media"></div>
                 <h3>This Portfolio</h3>
                 <p class="work-desc">A spatial, window-based interface exploring focus and intention.</p>
-                <div class="work-tags">
-                    <span>Design System</span>
-                    <span>Frontend</span>
-                    <span>Process</span>
-                </div>
             </article>
 
         </div>
         <div class="resize-handle"></div>
     </div>
 
-    <!-- ===== HOW I THINK ===== -->
+
+
     <div class="window preview" id="process-window">
         <div class="window-bar">
             <span class="window-title">How I Think</span>
@@ -100,79 +87,70 @@
         </div>
 
         <div class="window-body philosophy">
-
-            <div class="philo-header">
-                <div class="profile-circle"></div>
-                <div>
-                    <h2>Design Philosophy</h2>
-                    <p>
-                        Digital spaces should feel like extensions of thought —
-                        calm, intentional, and human.
-                    </p>
-                </div>
-            </div>
-
-            <details open>
-                <summary>What I believe</summary>
-                <p>
-                    I believe rules matter — but only when they’re understood well enough
-                    to be bent. Design shouldn’t default to generic conventions if they
-                    dilute intent or expression.
-                </p>
-            </details>
-
-            <details>
-                <summary>How I design</summary>
-                <ul>
-                    <li>Start with intent, not aesthetics</li>
-                    <li>Explore broadly, reduce deliberately</li>
-                    <li>Use constraints as creative leverage</li>
-                    <li>Design flows before polishing screens</li>
-                </ul>
-            </details>
-
-            <details>
-                <summary>Outside the box</summary>
-                <p>
-                    I’m interested in visual rhythm, interaction, illustration,
-                    and learning through building — including this site.
-                </p>
-            </details>
-
-            <p class="contact-line">
-                Let’s work together —
-                <a href="mailto:yourname@email.com">yourname@email.com</a>
-            </p>
-
+            <h2>Design Philosophy</h2>
+            <p>Digital spaces should feel like extensions of thought — calm, intentional, and human.</p>
         </div>
+
         <div class="resize-handle"></div>
     </div>
 
-    <!-- ===== ABOUT ===== -->
+
+
+    <!-- ================= ABOUT ================= -->
+
     <div class="window preview" id="about-window">
         <div class="window-bar">
-            <span class="window-title">About</span>
+            <span class="window-title">About Me</span>
             <span class="window-mode">Preview · double click to expand</span>
             <button class="close">×</button>
         </div>
 
-        <div class="window-body">
-            <p>
-                I’m a designer working across UX, visual systems, and interaction —
-                focused on clarity without sacrificing expression.
-            </p>
+        <div class="window-body about-layout">
+
+            <div class="about-hero">
+
+                <div class="profile-photo">
+                    <img src="Images/pfp.jpg" alt="Portrait of me">
+                </div>
+
+                <div class="about-text">
+
+                    <h2 class="about-name">Hi, I'm Gloria A-Kazad</h2>
+                    <p class="about-intro">
+                        Hi, I’m a designer focused on expressive systems, calm interaction, and thoughtful visual
+                        storytelling.
+                    </p>
+
+                </div>
+
+                <h4>Interests</h4>
+                <ul class="about-list">
+                    <li>Dance</li>
+                    <li>Volleyball</li>
+                    <li>Drawing</li>
+                    <li>Fitness</li>
+                </ul>
+
+                <h4>Education</h4>
+                <p>
+                    Currently studying design with a focus on UX, visual systems, and interaction — learning through
+                    both
+                    formal education and self-directed projects.
+                </p>
+
+                <h4>Tools</h4>
+                <p>
+                    Figma · Illustrator · Photoshop · Premiere Pro · GitHub · AI tools · Design systems
+                </p>
+
+            </div>
+
+            <div class="resize-handle"></div>
         </div>
-        <div class="resize-handle"></div>
-    </div>
 
-    <div class="ui-toast" id="ui-toast">
-        <strong>Your screen’s getting crowded.</strong><br>
-        Let’s give one window a break.
-    </div>
+        <div class="window-dock" id="window-dock"></div>
+        <script src="Script.js"></script>
 
-    <div class="window-dock" id="window-dock"></div>
-
-    <script src="Script.js"></script>
 </body>
 
 </html>
