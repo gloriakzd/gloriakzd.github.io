@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@300;400;700&display=swap"
         rel="stylesheet">
+
     <title>Portfolio</title>
     <link rel="stylesheet" href="Styles.css" />
 </head>
@@ -44,6 +46,7 @@
 
     <!-- ================= WINDOWS ================= -->
 
+    <!-- ===== WORK ===== -->
     <div class="window preview" id="work-window">
         <div class="window-bar">
             <span class="window-title">Selected Work</span>
@@ -53,21 +56,23 @@
 
         <div class="window-body work-grid">
 
-            <article class="work-card">
+            <article class="work-card reveal">
                 <div class="work-media">
-                    <img src="Images/fintech-preview.jpg" alt="">
+                    <img src="Images/Lumify BG.png" alt="nani">
                 </div>
-                <h3>Fintech Dashboard Redesign</h3>
-                <p class="work-desc">Improving clarity, hierarchy, and trust in data-dense interfaces.</p>
+                <h3>LUMIFY</h3>
+                <p class="work-desc">A calm space for understanding your skin, made simple and supportive.</p>
             </article>
 
-            <article class="work-card">
-                <div class="work-media"></div>
-                <h3>E-Commerce Mobile App</h3>
+            <article class="work-card reveal">
+                <div class="work-media">
+                    <img src="Images/Myro BG.png" alt="nani">
+                </div>
+                <h3>MYRO, Web-Redesign </h3>
                 <p class="work-desc">Reducing friction and guiding decisions through calm interaction.</p>
             </article>
 
-            <article class="work-card">
+            <article class="work-card reveal">
                 <div class="work-media"></div>
                 <h3>This Portfolio</h3>
                 <p class="work-desc">A spatial, window-based interface exploring focus and intention.</p>
@@ -78,7 +83,7 @@
     </div>
 
 
-
+    <!-- ===== PROCESS ===== -->
     <div class="window preview" id="process-window">
         <div class="window-bar">
             <span class="window-title">How I Think</span>
@@ -87,17 +92,15 @@
         </div>
 
         <div class="window-body philosophy">
-            <h2>Design Philosophy</h2>
-            <p>Digital spaces should feel like extensions of thought — calm, intentional, and human.</p>
+            <h2 class="reveal">Design Philosophy</h2>
+            <p class="reveal">Digital spaces should feel like extensions of thought — calm, intentional, and human.</p>
         </div>
 
         <div class="resize-handle"></div>
     </div>
 
 
-
-    <!-- ================= ABOUT ================= -->
-
+    <!-- ===== ABOUT ===== -->
     <div class="window preview" id="about-window">
         <div class="window-bar">
             <span class="window-title">About Me</span>
@@ -107,49 +110,74 @@
 
         <div class="window-body about-layout">
 
-            <div class="about-hero">
-
+            <section class="about-hero">
                 <div class="profile-photo">
                     <img src="Images/pfp.jpg" alt="Portrait of me">
                 </div>
 
-                <div class="about-text">
-
-                    <h2 class="about-name">Hi, I'm Gloria A-Kazad</h2>
-                    <p class="about-intro">
-                        Hi, I’m a designer focused on expressive systems, calm interaction, and thoughtful visual
-                        storytelling.
+                <div class="about-intro">
+                    <h1 class="about-title">Gloria A-Kazad</h1>
+                    <p class="about-tag">
+                        I design quiet, intentional visual experiences that feel lived in.
                     </p>
-
                 </div>
+            </section>
 
-                <h4>Interests</h4>
-                <ul class="about-list">
-                    <li>Dance</li>
-                    <li>Volleyball</li>
-                    <li>Drawing</li>
-                    <li>Fitness</li>
-                </ul>
-
-                <h4>Education</h4>
+            
+            <section class="reveal">
+                <h4>How I think</h4>
                 <p>
-                    Currently studying design with a focus on UX, visual systems, and interaction — learning through
-                    both
-                    formal education and self-directed projects.
+                    I’m drawn to quiet details, emotional atmosphere, and spaces that feel human.
                 </p>
+            </section>
 
-                <h4>Tools</h4>
+            <section class="reveal">
+                <h4>What I notice</h4>
                 <p>
-                    Figma · Illustrator · Photoshop · Premiere Pro · GitHub · AI tools · Design systems
+                    I pay attention to small interactions, subtle motion, and the way people move through digital
+                    environments.
                 </p>
+            </section>
 
-            </div>
+            <section class="reveal">
+                <h4>What I’m building</h4>
+                <p>
+                    I’m currently exploring immersive portfolios, interactive storytelling, and calm user experiences.
+                </p>
+            </section>
 
-            <div class="resize-handle"></div>
+
+
+            <!-- ⭐ SCROLL REVEAL SECTIONS -->
+            <h4 class="reveal">Interests</h4>
+            <ul class="about-list reveal">
+                <li>Dance</li>
+                <li>Volleyball</li>
+                <li>Drawing</li>
+                <li>Fitness</li>
+            </ul>
+
+            <h4 class="reveal">Education</h4>
+            <p class="reveal">
+                Currently studying design with a focus on UX, visual systems, and interaction — learning through
+                both formal education and self-directed projects.
+            </p>
+
+            <h4 class="reveal">Tools</h4>
+            <p class="reveal">
+                Figma · Illustrator · Photoshop · Premiere Pro · GitHub · AI tools · Design systems
+            </p>
+
         </div>
 
-        <div class="window-dock" id="window-dock"></div>
-        <script src="Script.js"></script>
+        <div class="resize-handle"></div>
+    </div>
+
+
+    <!-- ⭐ DOCK MUST LIVE OUTSIDE WINDOWS -->
+    <div class="window-dock" id="window-dock"></div>
+
+    <script src="Script.js"></script>
 
 </body>
 
