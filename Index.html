@@ -46,45 +46,92 @@
 
     <!-- ================= WINDOWS ================= -->
 
-    <!-- ===== WORK ===== -->
-    <div class="window preview" id="work-window">
+    <!-- ===== WORK / FINDER ===== -->
+    <div class="window preview workspace" id="work-window">
+
         <div class="window-bar">
             <span class="window-title">Selected Work</span>
             <span class="window-mode">Preview · double click to expand</span>
             <button class="close">×</button>
         </div>
 
-        <div class="window-body work-grid">
+        <div class="window-body work-layout">
 
-            <article class="work-card reveal">
-                <div class="work-media">
-                    <img src="Images/Lumify BG.png" alt="nani">
-                </div>
-                <h3>LUMIFY</h3>
-                <p class="work-desc">A calm space for understanding your skin, made simple and supportive.</p>
-            </article>
+            <div class="file-grid">
 
-            <article class="work-card reveal">
-                <div class="work-media">
-                    <img src="Images/Myro BG.png" alt="nani">
-                </div>
-                <h3>MYRO, Web-Redesign </h3>
-                <p class="work-desc">Reducing friction and guiding decisions through calm interaction.</p>
-            </article>
+                <article class="file-item" data-project="lumify">
+                    <div class="file-thumb">
+                        <img src="Images/Lumify BG.png" alt="">
+                    </div>
+                    <span class="file-name">Lumify.fig</span>
+                </article>
 
-            <article class="work-card reveal">
-                <div class="work-media"></div>
-                <h3>This Portfolio</h3>
-                <p class="work-desc">A spatial, window-based interface exploring focus and intention.</p>
-            </article>
+                <article class="file-item" data-project="myro">
+                    <div class="file-thumb">
+                        <img src="Images/Myro BG.png" alt="">
+                    </div>
+                    <span class="file-name">Myro.web</span>
+                </article>
+
+                <article class="file-item" data-project="portfolio">
+                    <div class="file-thumb"></div>
+                    <span class="file-name">Portfolio.sys</span>
+                </article>
+
+            </div>
+
+            <aside class="preview-panel">
+                <div class="preview-media"></div>
+                <h3 class="preview-title">Select a file</h3>
+                <p class="preview-desc">Hover over a project to preview.</p>
+                <div class="preview-meta"></div>
+            </aside>
 
         </div>
+
+        <div class="resize-handle"></div>
+    </div>
+
+
+    <!-- ===== LUMIFY PROJECT ===== -->
+    <div class="window" id="lumify-window">
+
+        <div class="window-bar">
+            <span class="window-title">Lumify</span>
+            <span class="window-mode">Full view</span>
+            <button class="close">×</button>
+        </div>
+
+        <div class="window-body">
+            <h2>Lumify</h2>
+            <p>Case study content here.</p>
+        </div>
+
+        <div class="resize-handle"></div>
+    </div>
+
+
+    <!-- ===== MYRO PROJECT ===== -->
+    <div class="window" id="myro-window">
+
+        <div class="window-bar">
+            <span class="window-title">Myro</span>
+            <span class="window-mode">Full view</span>
+            <button class="close">×</button>
+        </div>
+
+        <div class="window-body">
+            <h2>Myro</h2>
+            <p>Case study content here.</p>
+        </div>
+
         <div class="resize-handle"></div>
     </div>
 
 
     <!-- ===== PROCESS ===== -->
     <div class="window preview" id="process-window">
+
         <div class="window-bar">
             <span class="window-title">How I Think</span>
             <span class="window-mode">Preview · double click to expand</span>
@@ -93,7 +140,9 @@
 
         <div class="window-body philosophy">
             <h2 class="reveal">Design Philosophy</h2>
-            <p class="reveal">Digital spaces should feel like extensions of thought — calm, intentional, and human.</p>
+            <p class="reveal">
+                Digital spaces should feel like extensions of thought — calm, intentional, and human.
+            </p>
         </div>
 
         <div class="resize-handle"></div>
@@ -123,7 +172,7 @@
                 </div>
             </section>
 
-            
+
             <section class="reveal">
                 <h4>How I think</h4>
                 <p>
@@ -142,7 +191,8 @@
             <section class="reveal">
                 <h4>What I’m building</h4>
                 <p>
-                    I’m currently exploring immersive portfolios, interactive storytelling, and calm user experiences.
+                    I’m currently exploring immersive portfolios, interactive storytelling, and calm user
+                    experiences.
                 </p>
             </section>
 

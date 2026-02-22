@@ -1,5 +1,135 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+  const projectData = {
+    lumify: {
+      title: "Lumify",
+      desc: "A calm space for understanding your skin.",
+      image: "Images/Lumify BG.png",
+      meta: "UX · Branding · 2024"
+    },
+    myro: {
+      title: "Myro",
+      desc: "Reducing friction and guiding decisions.",
+      image: "Images/Myro BG.png",
+      meta: "UX · Web · 2023"
+    },
+    portfolio: {
+      title: "This Portfolio",
+      desc: "A spatial interface exploring focus.",
+      image: "",
+      meta: "Experimental · 2025"
+    }
+  };
+
+  const files = document.querySelectorAll('.file-item');
+
+  const previewMedia = document.querySelector('.preview-media');
+  const previewTitle = document.querySelector('.preview-title');
+  const previewDesc = document.querySelector('.preview-desc');
+  const previewMeta = document.querySelector('.preview-meta');
+
+
+  let hoverTimeout;
+
+  files.forEach(file => {
+
+    file.addEventListener('mouseenter', () => {
+      clearTimeout(hoverTimeout);
+
+      const id = file.dataset.project;
+      const data = projectData[id];
+      if (!data) return;
+
+      previewTitle.textContent = data.title;
+      previewDesc.textContent = data.desc;
+      previewMeta.textContent = data.meta;
+
+      previewMedia.innerHTML = data.image
+        ? `<img src="${data.image}" alt="">`
+        : "";
+
+      const img = previewMedia.querySelector('img');
+
+      if (img) {
+        img.onload = () => {
+          img.classList.add('loaded');
+        };
+      }
+    });
+
+    // ✅ dblclick stays INSIDE the loop
+    file.addEventListener('dblclick', () => {
+      const id = file.dataset.project;
+
+      createToast(`
+      <strong>Opening ${projectData[id].title}</strong><br>
+      Loading project view.
+    `);
+
+      setTimeout(() => {
+        openProjectWindow(id);
+      }, 1000);
+    });
+
+  }); // ✅ loop ends here
+
+
+  // ✅ THIS is outside the loop
+  const fileGrid = document.querySelector('.file-grid');
+
+  fileGrid.addEventListener('mouseleave', () => {
+    hoverTimeout = setTimeout(() => {
+      previewTitle.textContent = "Select a file";
+      previewDesc.textContent = "Hover over a project to preview.";
+      previewMeta.textContent = "";
+      previewMedia.innerHTML = "";
+    }, 280);
+  });
+
+
+
+
+  /* ==============================
+       WORK WINDOW WORKSPACE
+    ============================== */
+  function openProjectWindow(id) {
+
+    const projectWin = document.getElementById(`${id}-window`);
+    if (!projectWin) return;
+
+    const projectWindows = activeWindows.filter(
+      w => !w.classList.contains('workspace')
+    );
+
+    if (projectWindows.length >= 1) {
+      replaceWindow(projectWindows[0], projectWin);
+    } else {
+      projectWin.style.display = 'block';
+      projectWin.style.zIndex = ++topZ;
+      activeWindows.push(projectWin);
+    }
+
+    setFullMode(projectWin);
+
+    document.querySelectorAll('.workspace').forEach(w => {
+      if (w !== projectWin) {
+        w.classList.add('dimmed');
+      }
+    });
+
+    document.querySelectorAll('.workspace').forEach(w => {
+      if (w !== projectWin) {
+        w.classList.add('dimmed');
+      }
+    });
+
+  }
+
+
+
+
+
+
   const cards = document.querySelectorAll('.back-card');
   const windows = document.querySelectorAll('.window');
   const folder = document.querySelector('.folder');
@@ -85,13 +215,13 @@ document.addEventListener('DOMContentLoaded', () => {
     void folder.offsetWidth; // force restart animation
     folder.classList.add('folder-breathe');
 
-  /* ⭐ NEW: MICRO DEPTH SHIFT */
-  if (activeWindows.length > 0) {
-    cardStack?.classList.add('depth-shift');
-  } else {
-    cardStack?.classList.remove('depth-shift');
+    /* ⭐ NEW: MICRO DEPTH SHIFT */
+    if (activeWindows.length > 0) {
+      cardStack?.classList.add('depth-shift');
+    } else {
+      cardStack?.classList.remove('depth-shift');
+    }
   }
-}
 
   /* ==============================
      ACTIVE CARD
@@ -218,257 +348,272 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-/* ==============================
-   WINDOW SETUP
-============================== */
+  /* ==============================
+     WINDOW SETUP
+  ============================== */
 
-windows.forEach(win => {
+  windows.forEach(win => {
 
-  const closeBtn = win.querySelector('.close');
-  const bar = win.querySelector('.window-bar');
+    const closeBtn = win.querySelector('.close');
+    const bar = win.querySelector('.window-bar');
 
-  closeBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    dismissToastsEarly();
-    animateMinimize(win);
-    setActiveCard(null);
-  });
-
-  bar.addEventListener('dblclick', () => {
-    if (!win.classList.contains('full')) {
-      setFullMode(win);
-    }
-  });
-
-  win.addEventListener('mousedown', () => {
-    win.style.zIndex = ++topZ;
-    setActiveCard(win.id);
-  });
-
-  makeDraggable(win);
-  makeResizable(win);
-});
-
-/* ==============================
-   OPEN WINDOW
-============================== */
-
-function openWindow(win) {
-
-  win.classList.remove('full');
-  setPreviewMode(win);
-
-  if (minimizedWindows.has(win)) {
-    minimizedWindows.get(win).remove();
-    minimizedWindows.delete(win);
-  }
-
-  win.style.display = 'block';
-  win.style.opacity = '0';
-  applyAnchor(win, true);
-  win.style.transform = 'scale(.98)';
-  win.style.zIndex = ++topZ;
-
-  requestAnimationFrame(() => {
-    win.style.transition = 'transform .32s cubic-bezier(.2,.8,.2,1), opacity .32s ease, width .32s ease';
-    win.style.opacity = '1';
-    win.style.transform = 'scale(1)';
-  });
-}
-
-/* ==============================
-   PREVIEW / FULL
-============================== */
-
-function setPreviewMode(win) {
-  win.classList.add('preview');
-  win.classList.remove('full');
-  applyAnchor(win, true);
-  updateModeLabel(win, 'preview');
-}
-
-/* ⭐⭐⭐ FULL FOCUS MODE ⭐⭐⭐ */
-
-function setFullMode(win) {
-
-  activeWindows
-    .filter(w => w !== win)
-    .forEach(w => {
-      w.style.transition = 'opacity .3s ease, transform .3s ease';
-      w.style.opacity = '0';
-      w.style.transform = 'scale(.96)';
-      setTimeout(() => {
-        w.style.display = 'none';
-      }, 300);
+    closeBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      dismissToastsEarly();
+      animateMinimize(win);
+      setActiveCard(null);
     });
 
-  activeWindows.length = 0;
-  activeWindows.push(win);
+    bar.addEventListener('dblclick', () => {
+      if (!win.classList.contains('full')) {
+        setFullMode(win);
+      }
+    });
 
-  win.classList.remove('preview');
-  win.classList.add('full');
+    win.addEventListener('mousedown', () => {
+      win.style.zIndex = ++topZ;
+      setActiveCard(win.id);
+    });
 
-  win.style.transition =
-    'left .45s ease, top .45s ease, width .45s ease, height .45s ease, transform .45s ease';
+    makeDraggable(win);
+    makeResizable(win);
+  });
 
-  win.style.left = '50%';
-  win.style.top = '50%';
-  win.style.transform = 'translate(-50%, -50%) scale(1)';
-  win.style.width = 'min(880px, 92vw)';
-  win.style.height = 'min(78vh, 780px)';
-  win.style.zIndex = ++topZ;
+  /* ==============================
+     OPEN WINDOW
+  ============================== */
 
-  updateModeLabel(win, 'full');
-  updateFolderState();
-}
+  function openWindow(win) {
 
+    win.classList.remove('full');
+    setPreviewMode(win);
 
-/* ==============================
-   MINIMIZE
-============================== */
+    if (minimizedWindows.has(win)) {
+      minimizedWindows.get(win).remove();
+      minimizedWindows.delete(win);
+    }
 
-function animateMinimize(win) {
+    win.style.display = 'block';
+    win.style.opacity = '0';
+    applyAnchor(win, true);
+    win.style.transform = 'scale(.98)';
+    win.style.zIndex = ++topZ;
 
-  if (minimizedWindows.has(win)) return;
+    requestAnimationFrame(() => {
+      win.style.transition = 'transform .32s cubic-bezier(.2,.8,.2,1), opacity .32s ease, width .32s ease';
+      win.style.opacity = '1';
+      win.style.transform = 'scale(1)';
+    });
+  }
 
-  win.style.transition = 'transform .30s ease, opacity .30s ease';
-  win.style.opacity = '0';
-  win.style.transform = 'translateY(40px) scale(.92)';
+  /* ==============================
+     PREVIEW / FULL
+  ============================== */
 
-  setTimeout(() => {
-    win.style.display = 'none';
-    win.style.opacity = '1';
-    win.style.transform = 'none';
+  function setPreviewMode(win) {
+    win.classList.add('preview');
+    win.classList.remove('full');
+    applyAnchor(win, true);
+    updateModeLabel(win, 'preview');
+  }
 
-    addToDock(win);
-    removeFromActive(win);
+  /* ⭐⭐⭐ FULL FOCUS MODE ⭐⭐⭐ */
+
+  function setFullMode(win) {
+
+    activeWindows
+      .filter(w => w !== win && !w.classList.contains('workspace'))
+      .forEach(w => {
+        w.style.transition = 'opacity .3s ease, transform .3s ease';
+        w.style.opacity = '0';
+        w.style.transform = 'scale(.96)';
+        setTimeout(() => {
+          w.style.display = 'none';
+        }, 300);
+      });
+
+    activeWindows.length = 0;
+    activeWindows.push(win);
+
+    win.classList.remove('preview');
+    win.classList.add('full');
+
+    win.style.transition =
+      'left .45s ease, top .45s ease, width .45s ease, height .45s ease, transform .45s ease';
+
+    win.style.left = '50%';
+    win.style.top = '50%';
+    win.style.transform = 'translate(-50%, -50%) scale(1)';
+    win.style.width = 'min(880px, 92vw)';
+    win.style.height = 'min(78vh, 780px)';
+    win.style.zIndex = ++topZ;
+
+    updateModeLabel(win, 'full');
     updateFolderState();
-  }, 300);
-}
+  }
 
-function addToDock(win) {
 
-  if (minimizedWindows.has(win)) return;
+  /* ==============================
+     MINIMIZE
+  ============================== */
 
-  const item = document.createElement('div');
-  item.className = 'dock-item';
+  function animateMinimize(win) {
 
-  const title = win.querySelector('.window-title');
-  item.textContent = title ? title.textContent : 'Window';
+    if (minimizedWindows.has(win)) return;
 
-  item.addEventListener('click', () => restoreFromDock(win));
+    win.style.transition = 'transform .30s ease, opacity .30s ease';
+    win.style.opacity = '0';
+    win.style.transform = 'translateY(40px) scale(.92)';
 
-  minimizedWindows.set(win, item);
-  document.getElementById('window-dock').appendChild(item);
-}
+    setTimeout(() => {
+      win.style.display = 'none';
+      win.style.opacity = '1';
+      win.style.transform = 'none';
 
-function restoreFromDock(win) {
+      addToDock(win);
+      removeFromActive(win);
+      updateFolderState();
+    }, 300);
+  }
 
-  if (activeWindows.length >= MAX_WINDOWS) {
-    const oldest = activeWindows[0];
-    replaceWindow(oldest, win);
+  function addToDock(win) {
 
-    createToast(`
+    if (minimizedWindows.has(win)) return;
+
+    const item = document.createElement('div');
+    item.className = 'dock-item';
+
+    const title = win.querySelector('.window-title');
+    item.textContent = title ? title.textContent : 'Window';
+
+    item.addEventListener('click', () => restoreFromDock(win));
+
+    minimizedWindows.set(win, item);
+    document.getElementById('window-dock').appendChild(item);
+  }
+
+  function restoreFromDock(win) {
+
+    if (activeWindows.length >= MAX_WINDOWS) {
+      const oldest = activeWindows[0];
+      replaceWindow(oldest, win);
+
+      createToast(`
         <strong>Your screen’s getting crowded.</strong><br>
         Let’s give one window a break.
       `);
 
-    return;
+      return;
+    }
+
+    minimizedWindows.get(win).remove();
+    minimizedWindows.delete(win);
+
+    win.dataset.slot =
+      activeWindows.length === 0 ? 'right' : 'left';
+
+    openWindow(win);
+    activeWindows.push(win);
+    setActiveCard(win.id);
+    updateFolderState();
   }
 
-  minimizedWindows.get(win).remove();
-  minimizedWindows.delete(win);
-
-  win.dataset.slot =
-    activeWindows.length === 0 ? 'right' : 'left';
-
-  openWindow(win);
-  activeWindows.push(win);
-  setActiveCard(win.id);
-  updateFolderState();
-}
-
-/* ==============================
-   FOCUS PULSE
-============================== */
-
-function focusWindow(win) {
-
-  win.style.zIndex = ++topZ;
-
-  /* restart animation cleanly */
-  win.classList.remove('focus-pulse');
-  void win.offsetWidth;
-  win.classList.add('focus-pulse');
-
-  /* ⭐ restore soft float movement */
-  win.style.transition = 'transform .32s cubic-bezier(.2,.8,.2,1)';
-  win.style.transform = 'scale(1.02) translateY(-6px)';
-
-  setTimeout(() => {
-    win.style.transform = 'scale(1) translateY(0)';
-  }, 180);
-}
+  if (!document.querySelector('.window.full')) {
+    document.querySelectorAll('.workspace').forEach(w => {
+      w.classList.remove('dimmed');
+    });
+  }
 
 
-function removeFromActive(win) {
-  const i = activeWindows.indexOf(win);
-  if (i > -1) activeWindows.splice(i, 1);
-}
+  /* ==============================
+     FOCUS PULSE
+  ============================== */
 
-/* ==============================
-   DRAG
-============================== */
-
-function makeDraggable(win) {
-  const bar = win.querySelector('.window-bar');
-  let offsetX = 0, offsetY = 0, dragging = false;
-
-  bar.addEventListener('mousedown', e => {
-    dragging = true;
-    const rect = win.getBoundingClientRect();
-
-    win.style.transition = 'none';
-    win.style.left = `${rect.left}px`;
-    win.style.top = `${rect.top}px`;
-    win.style.transform = 'none';
-
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
+  function focusWindow(win) {
 
     win.style.zIndex = ++topZ;
+
+    /* restart animation cleanly */
+    win.classList.remove('focus-pulse');
+    void win.offsetWidth;
+    win.classList.add('focus-pulse');
+
+    /* ⭐ restore soft float movement */
+    win.style.transition = 'transform .32s cubic-bezier(.2,.8,.2,1)';
+    win.style.transform = 'scale(1.02) translateY(-6px)';
+
+    setTimeout(() => {
+      win.style.transform = 'scale(1) translateY(0)';
+    }, 180);
+
+
+    if (win.classList.contains('workspace')) {
+      document.querySelectorAll('.workspace').forEach(w => {
+        w.classList.remove('dimmed');
+      });
+    }
+
+  }
+
+
+  function removeFromActive(win) {
+    const i = activeWindows.indexOf(win);
+    if (i > -1) activeWindows.splice(i, 1);
+  }
+
+  /* ==============================
+     DRAG
+  ============================== */
+
+  function makeDraggable(win) {
+    const bar = win.querySelector('.window-bar');
+    let offsetX = 0, offsetY = 0, dragging = false;
+
+    bar.addEventListener('mousedown', e => {
+      dragging = true;
+      const rect = win.getBoundingClientRect();
+
+      win.style.transition = 'none';
+      win.style.left = `${rect.left}px`;
+      win.style.top = `${rect.top}px`;
+      win.style.transform = 'none';
+
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+
+      win.style.zIndex = ++topZ;
+    });
+
+    document.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      win.style.left = `${e.clientX - offsetX}px`;
+      win.style.top = `${e.clientY - offsetY}px`;
+    });
+
+    document.addEventListener('mouseup', () => {
+      dragging = false;
+      win.style.transition = '';
+    });
+  }
+
+  /* ==============================
+     RESIZE
+  ============================== */
+
+  function makeResizable(win) {
+    const handle = win.querySelector('.resize-handle');
+    if (!handle) return;
+    handle.addEventListener('mousedown', () => setFullMode(win));
+  }
+
+  /* ==============================
+     FOLDER WIGGLE
+  ============================== */
+
+  requestAnimationFrame(() => {
+    folder.classList.add('wiggle');
+    setTimeout(() => folder.classList.remove('wiggle'), 700);
   });
-
-  document.addEventListener('mousemove', e => {
-    if (!dragging) return;
-    win.style.left = `${e.clientX - offsetX}px`;
-    win.style.top = `${e.clientY - offsetY}px`;
-  });
-
-  document.addEventListener('mouseup', () => {
-    dragging = false;
-    win.style.transition = '';
-  });
-}
-
-/* ==============================
-   RESIZE
-============================== */
-
-function makeResizable(win) {
-  const handle = win.querySelector('.resize-handle');
-  if (!handle) return;
-  handle.addEventListener('mousedown', () => setFullMode(win));
-}
-
-/* ==============================
-   FOLDER WIGGLE
-============================== */
-
-requestAnimationFrame(() => {
-  folder.classList.add('wiggle');
-  setTimeout(() => folder.classList.remove('wiggle'), 700);
-});
 
 });
 
@@ -482,10 +627,10 @@ const observer = new IntersectionObserver(entries => {
       entry.target.classList.add('show');
     }
   });
-},{
+}, {
   threshold: 0.15
 });
 
-document.querySelectorAll('.reveal').forEach(el=>{
+document.querySelectorAll('.reveal').forEach(el => {
   observer.observe(el);
 });
