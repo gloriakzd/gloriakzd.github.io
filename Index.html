@@ -41,6 +41,17 @@
             </div>
         </div>
 
+        <div class="desktop-icons">
+            <div class="shortcut" data-window="experiments-window">
+                <div class="icon-box">🧪</div>
+                <span>Experiments</span>
+            </div>
+            <div class="shortcut" data-window="trash-window">
+                <div class="icon-box">🗑️</div>
+                <span>Trash</span>
+            </div>
+        </div>
+
     </main>
 
 
@@ -56,20 +67,16 @@
         </div>
 
         <div class="window-body work-layout">
+            <div class="workspace-overlay"></div>
 
             <div class="file-grid">
-
                 <article class="file-item" data-project="lumify">
-                    <div class="file-thumb">
-                        <img src="Images/Lumify BG.png" alt="">
-                    </div>
+                    <div class="file-thumb"><img src="Images/Lumify BG.png" alt=""></div>
                     <span class="file-name">Lumify.fig</span>
                 </article>
 
                 <article class="file-item" data-project="myro">
-                    <div class="file-thumb">
-                        <img src="Images/Myro BG.png" alt="">
-                    </div>
+                    <div class="file-thumb"><img src="Images/Myro BG.png" alt=""></div>
                     <span class="file-name">Myro.web</span>
                 </article>
 
@@ -77,7 +84,6 @@
                     <div class="file-thumb"></div>
                     <span class="file-name">Portfolio.sys</span>
                 </article>
-
             </div>
 
             <aside class="preview-panel">
@@ -86,7 +92,6 @@
                 <p class="preview-desc">Hover over a project to preview.</p>
                 <div class="preview-meta"></div>
             </aside>
-
         </div>
 
         <div class="resize-handle"></div>
@@ -95,7 +100,6 @@
 
     <!-- ===== LUMIFY PROJECT ===== -->
     <div class="window" id="lumify-window">
-
         <div class="window-bar">
             <span class="window-title">Lumify</span>
             <span class="window-mode">Full view</span>
@@ -103,14 +107,42 @@
         </div>
 
         <div class="window-body">
-            <h2>Lumify</h2>
-            <p>Case study content here.</p>
+            <div class="project-header">
+                <div class="brand-group">
+                    <img src="Images/lumiLogo.png" alt="Lumify logo" class="project-logo">
+                    <h2>Lumify</h2>
+                </div>
+                <div class="project-tags">
+                    <span class="tag">UX Research</span>
+                    <span class="tag">AI Integration</span>
+                    <span class="tag">Mobile App</span>
+                </div>
+            </div>
+
+            <section class="project-section grid-layout">
+                <div class="text-block">
+                    <h4>The Vision</h4>
+                    <p>Lumify is designed to support individuals who feel overwhelmed by skincare routines.</p>
+                </div>
+                <div class="side-note">
+                    <span class="note-label">Insight 01</span>
+                    <p>70% of users don't know their own skin type accurately.</p>
+                </div>
+            </section>
+
+            <img src="Images/lumi 1.png" alt="Lumify Interface" class="case-study-image">
+
+            <section class="project-section">
+                <h4>The Outcome</h4>
+                <p>By providing clear ingredient insights, users reported a 40% increase in confidence regarding their
+                    product choices.</p>
+            </section>
         </div>
-
         <div class="resize-handle"></div>
-    </div>
+    </div> ```
 
-
+    **Would you like me to check your CSS file next to make sure the `.window` class has the right "trap" properties to
+    keep the text from escaping?**
     <!-- ===== MYRO PROJECT ===== -->
     <div class="window" id="myro-window">
 
