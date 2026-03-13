@@ -1,265 +1,494 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
+
+
 <head>
+
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@300;400;700&display=swap"
         rel="stylesheet">
 
+
+
     <title>Portfolio</title>
+
     <link rel="stylesheet" href="Styles.css" />
+
 </head>
+
+
 
 <body>
 
+
+
     <main class="desk">
 
+
+
         <div class="card-stack">
+
             <a href="#" class="back-card card-one" data-window="work-window">
+
                 <span class="card-cta">Selected work</span>
+
             </a>
+
+
 
             <a href="#" class="back-card card-two" data-window="process-window">
+
                 <span class="card-cta">How I think</span>
+
             </a>
+
+
 
             <a href="#" class="back-card card-three" data-window="about-window">
+
                 <span class="card-cta">About Me</span>
+
             </a>
+
         </div>
+
+
 
         <div class="folder">
+
             <img src="Images/mainFolder.png" class="folder-image" alt="">
+
             <div class="folder-content">
+
                 <h1>Welcome</h1>
+
                 <p>Design-forward portfolio focused on clarity, intent, and expressive systems.</p>
+
             </div>
+
         </div>
 
+
+
         <div class="desktop-icons">
+
             <div class="shortcut" data-window="experiments-window">
+
                 <div class="icon-box">🧪</div>
+
                 <span>Experiments</span>
+
             </div>
+
             <div class="shortcut" data-window="trash-window">
+
                 <div class="icon-box">🗑️</div>
+
                 <span>Trash</span>
+
             </div>
+
         </div>
+
+
 
     </main>
 
 
+
+
+
     <!-- ================= WINDOWS ================= -->
 
+
+
     <!-- ===== WORK / FINDER ===== -->
-    <div class="window preview workspace" id="work-window">
+
+    <<div class="window preview workspace" id="work-window">
+
+
 
         <div class="window-bar">
+
             <span class="window-title">Selected Work</span>
+
             <span class="window-mode">Preview · double click to expand</span>
+
             <button class="close">×</button>
+
         </div>
+
+
 
         <div class="window-body work-layout">
+
             <div class="workspace-overlay"></div>
 
+
+
             <div class="file-grid">
+
                 <article class="file-item" data-project="lumify">
+
                     <div class="file-thumb"><img src="Images/Lumify BG.png" alt=""></div>
+
                     <span class="file-name">Lumify.fig</span>
+
                 </article>
+
+
 
                 <article class="file-item" data-project="myro">
+
                     <div class="file-thumb"><img src="Images/Myro BG.png" alt=""></div>
+
                     <span class="file-name">Myro.web</span>
+
                 </article>
+
+
 
                 <article class="file-item" data-project="portfolio">
+
                     <div class="file-thumb"></div>
+
                     <span class="file-name">Portfolio.sys</span>
+
                 </article>
+
             </div>
+
+
 
             <aside class="preview-panel">
+
                 <div class="preview-media"></div>
+
                 <h3 class="preview-title">Select a file</h3>
+
                 <p class="preview-desc">Hover over a project to preview.</p>
+
                 <div class="preview-meta"></div>
+
             </aside>
+
         </div>
+
+
 
         <div class="resize-handle"></div>
-    </div>
 
-
-    <!-- ===== LUMIFY PROJECT ===== -->
-    <div class="window" id="lumify-window">
-        <div class="window-bar">
-            <span class="window-title">Lumify</span>
-            <span class="window-mode">Full view</span>
-            <button class="close">×</button>
         </div>
 
-        <div class="window-body">
-            <div class="project-header">
-                <div class="brand-group">
-                    <img src="Images/lumiLogo.png" alt="Lumify logo" class="project-logo">
-                    <h2>Lumify</h2>
-                </div>
-                <div class="project-tags">
-                    <span class="tag">UX Research</span>
-                    <span class="tag">AI Integration</span>
-                    <span class="tag">Mobile App</span>
-                </div>
+
+
+
+
+        <!-- ===== LUMIFY PROJECT ===== -->
+
+        <div class="window" id="lumify-window">
+
+
+
+            <div class="window-bar">
+
+                <span class="window-title">Lumify</span>
+
+                <span class="window-mode">Full view</span>
+
+                <button class="close">×</button>
+
             </div>
 
-            <section class="project-section grid-layout">
-                <div class="text-block">
-                    <h4>The Vision</h4>
-                    <p>Lumify is designed to support individuals who feel overwhelmed by skincare routines.</p>
-                </div>
-                <div class="side-note">
-                    <span class="note-label">Insight 01</span>
-                    <p>70% of users don't know their own skin type accurately.</p>
-                </div>
-            </section>
-
-            <img src="Images/lumi 1.png" alt="Lumify Interface" class="case-study-image">
-
-            <section class="project-section">
-                <h4>The Outcome</h4>
-                <p>By providing clear ingredient insights, users reported a 40% increase in confidence regarding their
-                    product choices.</p>
-            </section>
-        </div>
-        <div class="resize-handle"></div>
-    </div> ```
-
-    **Would you like me to check your CSS file next to make sure the `.window` class has the right "trap" properties to
-    keep the text from escaping?**
-    <!-- ===== MYRO PROJECT ===== -->
-    <div class="window" id="myro-window">
-
-        <div class="window-bar">
-            <span class="window-title">Myro</span>
-            <span class="window-mode">Full view</span>
-            <button class="close">×</button>
-        </div>
-
-        <div class="window-body">
-            <h2>Myro</h2>
-            <p>Case study content here.</p>
-        </div>
-
-        <div class="resize-handle"></div>
-    </div>
 
 
-    <!-- ===== PROCESS ===== -->
-    <div class="window preview" id="process-window">
+            <div class="window-body">
+                <div class="project-header">
+                    <div class="brand-group">
+                        <img src="Images/lumiLogo.png" alt="Lumify logo" class="project-logo">
+                        <h2>Lumify</h2>
+                    </div>
+                    <p class="case-study-subtitle">A calm space for understanding your skin - made simple and
+                        supportive.</p>
 
-        <div class="window-bar">
-            <span class="window-title">How I Think</span>
-            <span class="window-mode">Preview · double click to expand</span>
-            <button class="close">×</button>
-        </div>
-
-        <div class="window-body philosophy">
-            <h2 class="reveal">Design Philosophy</h2>
-            <p class="reveal">
-                Digital spaces should feel like extensions of thought — calm, intentional, and human.
-            </p>
-        </div>
-
-        <div class="resize-handle"></div>
-    </div>
-
-
-    <!-- ===== ABOUT ===== -->
-    <div class="window preview" id="about-window">
-        <div class="window-bar">
-            <span class="window-title">About Me</span>
-            <span class="window-mode">Preview · double click to expand</span>
-            <button class="close">×</button>
-        </div>
-
-        <div class="window-body about-layout">
-
-            <section class="about-hero">
-                <div class="profile-photo">
-                    <img src="Images/pfp.jpg" alt="Portrait of me">
+                    <div class="project-tags">
+                        <span class="tag">UX Research</span>
+                        <span class="tag">AI Integration</span>
+                        <span class="tag">Mobile App</span>
+                    </div>
                 </div>
 
-                <div class="about-intro">
-                    <h1 class="about-title">Gloria A-Kazad</h1>
-                    <p class="about-tag">
-                        I design quiet, intentional visual experiences that feel lived in.
+                <section class="project-section grid-layout">
+                    <div class="text-block">
+                        <h4>The Vision</h4>
+                        <p>Lumify is designed to support individuals who feel overwhelmed by skincare routines.</p>
+                    </div>
+                    <div class="side-note">
+                        <span class="note-label">Insight 01</span>
+                        <p>70% of users don't know their own skin type accurately.</p>
+                    </div>
+                </section>
+                
+                <img src="Images/lumi 1.png" alt="Lumify Interface" class="case-study-image">
+                </section>
+
+                <section class="project-section">
+                    <h4>The Outcome</h4>
+                    <p>By providing clear ingredient insights, users reported a 40% increase in confidence regarding
+                        their product choices.</p>
+                </section>
+            </div>
+
+
+
+
+
+            <div class="resize-handle"></div>
+
+        </div>
+
+
+
+
+
+        <!-- ===== MYRO PROJECT ===== -->
+
+        <div class="window" id="myro-window">
+
+
+
+            <div class="window-bar">
+
+                <span class="window-title">Myro</span>
+
+                <span class="window-mode">Full view</span>
+
+                <button class="close">×</button>
+
+            </div>
+
+
+
+            <div class="window-body">
+
+                <h2>Myro</h2>
+
+                <p>Case study content here.</p>
+
+            </div>
+
+
+
+            <div class="resize-handle"></div>
+
+        </div>
+
+
+
+
+
+        <!-- ===== PROCESS ===== -->
+
+        <div class="window preview" id="process-window">
+
+
+
+            <div class="window-bar">
+
+                <span class="window-title">How I Think</span>
+
+                <span class="window-mode">Preview · double click to expand</span>
+
+                <button class="close">×</button>
+
+            </div>
+
+
+
+            <div class="window-body philosophy">
+
+                <h2 class="reveal">Design Philosophy</h2>
+
+                <p class="reveal">
+
+                    Digital spaces should feel like extensions of thought — calm, intentional, and human.
+
+                </p>
+
+            </div>
+
+
+
+            <div class="resize-handle"></div>
+
+        </div>
+
+
+
+
+
+        <!-- ===== ABOUT ===== -->
+
+        <div class="window preview" id="about-window">
+
+            <div class="window-bar">
+
+                <span class="window-title">About Me</span>
+
+                <span class="window-mode">Preview · double click to expand</span>
+
+                <button class="close">×</button>
+
+            </div>
+
+
+
+            <div class="window-body about-layout">
+
+
+
+                <section class="about-hero">
+
+                    <div class="profile-photo">
+
+                        <img src="Images/pfp.jpg" alt="Portrait of me">
+
+                    </div>
+
+
+
+                    <div class="about-intro">
+
+                        <h1 class="about-title">Gloria A-Kazad</h1>
+
+                        <p class="about-tag">
+
+                            I design quiet, intentional visual experiences that feel lived in.
+
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+
+
+
+                <section class="reveal">
+
+                    <h4>How I think</h4>
+
+                    <p>
+
+                        I’m drawn to quiet details, emotional atmosphere, and spaces that feel human.
+
                     </p>
-                </div>
-            </section>
+
+                </section>
 
 
-            <section class="reveal">
-                <h4>How I think</h4>
-                <p>
-                    I’m drawn to quiet details, emotional atmosphere, and spaces that feel human.
+
+                <section class="reveal">
+
+                    <h4>What I notice</h4>
+
+                    <p>
+
+                        I pay attention to small interactions, subtle motion, and the way people move through digital
+
+                        environments.
+
+                    </p>
+
+                </section>
+
+
+
+                <section class="reveal">
+
+                    <h4>What I’m building</h4>
+
+                    <p>
+
+                        I’m currently exploring immersive portfolios, interactive storytelling, and calm user
+
+                        experiences.
+
+                    </p>
+
+                </section>
+
+
+
+                <!-- ⭐ SCROLL REVEAL SECTIONS -->
+
+                <h4 class="reveal">Interests</h4>
+
+                <ul class="about-list reveal">
+
+                    <li>Dance</li>
+
+                    <li>Volleyball</li>
+
+                    <li>Drawing</li>
+
+                    <li>Fitness</li>
+
+                </ul>
+
+
+
+                <h4 class="reveal">Education</h4>
+
+                <p class="reveal">
+
+                    Currently studying design with a focus on UX, visual systems, and interaction — learning through
+
+                    both formal education and self-directed projects.
+
                 </p>
-            </section>
 
-            <section class="reveal">
-                <h4>What I notice</h4>
-                <p>
-                    I pay attention to small interactions, subtle motion, and the way people move through digital
-                    environments.
+
+
+                <h4 class="reveal">Tools</h4>
+
+                <p class="reveal">
+
+                    Figma · Illustrator · Photoshop · Premiere Pro · GitHub · AI tools · Design systems
+
                 </p>
-            </section>
-
-            <section class="reveal">
-                <h4>What I’m building</h4>
-                <p>
-                    I’m currently exploring immersive portfolios, interactive storytelling, and calm user
-                    experiences.
-                </p>
-            </section>
 
 
 
-            <!-- ⭐ SCROLL REVEAL SECTIONS -->
-            <h4 class="reveal">Interests</h4>
-            <ul class="about-list reveal">
-                <li>Dance</li>
-                <li>Volleyball</li>
-                <li>Drawing</li>
-                <li>Fitness</li>
-            </ul>
+            </div>
 
-            <h4 class="reveal">Education</h4>
-            <p class="reveal">
-                Currently studying design with a focus on UX, visual systems, and interaction — learning through
-                both formal education and self-directed projects.
-            </p>
 
-            <h4 class="reveal">Tools</h4>
-            <p class="reveal">
-                Figma · Illustrator · Photoshop · Premiere Pro · GitHub · AI tools · Design systems
-            </p>
+
+            <div class="resize-handle"></div>
 
         </div>
 
-        <div class="resize-handle"></div>
-    </div>
+
+        <!-- ⭐ DOCK MUST LIVE OUTSIDE WINDOWS -->
+
+        <div class="window-dock" id="window-dock"></div>
+
+        <script src="Script.js"></script>
 
 
-    <!-- ⭐ DOCK MUST LIVE OUTSIDE WINDOWS -->
-    <div class="window-dock" id="window-dock"></div>
-
-    <script src="Script.js"></script>
 
 </body>
 

@@ -9,6 +9,7 @@ body {
   color: #2b2b2b;
 }
 
+
 /* ===== DESK ===== */
 .desk {
   position: relative;
@@ -17,14 +18,17 @@ body {
   padding-top: 10rem;
 }
 
+
+
 /* ===== CARD STACK ===== */
 .card-stack {
   position: relative;
   height: 260px;
   z-index: 2;
   transition: transform .35s cubic-bezier(.2, .8, .2, 1);
-
 }
+
+
 
 .card-cta {
   position: absolute;
@@ -48,7 +52,6 @@ body {
   height: 220px;
   border-radius: 16px;
   cursor: pointer;
-
   text-decoration: none;
   color: inherit;
 
@@ -60,107 +63,1367 @@ body {
     /* top highlight */
     0 -1px 0 rgba(0, 0, 0, .05) inset;
   /* bottom edge */
-
   transition:
     transform .35s cubic-bezier(.2, .8, .2, 1),
     box-shadow .35s ease,
     filter .35s ease;
-
   overflow: hidden;
 }
 
 
 .card-one {
+
   background: #e8dcd5;
+
   top: 0;
+
 }
+
+
 
 .card-two {
+
   background: #dfe7e3;
+
   top: 32px;
+
 }
+
+
 
 .card-three {
+
   background: #e6e1f0;
+
   top: 64px;
+
 }
+
+
 
 .back-card::after {
+
   content: "";
+
   position: absolute;
+
   top: -50%;
+
   left: -120%;
+
   width: 60%;
+
   height: 200%;
 
+
+
   background: linear-gradient(120deg,
+
       transparent,
+
       rgba(255, 255, 255, .35),
+
       transparent);
 
+
+
   transform: skewX(-20deg);
+
   transition: left 2.2s cubic-bezier(.2, .8, .2, 1);
+
 }
+
+
 
 .back-card:hover {
+
   transform: translateX(-50%) translateY(-12px) scale(1.01);
+
   box-shadow:
+
     0 26px 50px rgba(0, 0, 0, .12),
+
     0 2px 0 rgba(255, 255, 255, .45) inset,
+
     0 -1px 0 rgba(0, 0, 0, .05) inset;
+
 }
 
+
+
 .back-card:hover::after {
+
   left: 140%;
+
   transition-delay: .12s;
+
 }
+
+
+
+
 
 
 
 /* ===== FOLDER (now above cards) ===== */
+
 .folder {
+
   position: relative;
+
   width: 900px;
+
   margin: -160px auto 0;
+
   z-index: 5;
 
+
+
   transform: translateY(0);
+
   transition:
+
     transform .45s cubic-bezier(.2, .8, .2, 1),
+
     filter .45s ease;
+
 }
+
+
 
 /* one window open */
+
 .folder--active {
+
   transform: translateY(10px);
+
   filter: brightness(.96);
+
 }
 
+
+
 /* two windows open */
+
 .folder--busy {
+
   transform: translateY(18px);
+
   filter: brightness(.92);
+
 }
+
+
+
+
 
 
 
 .folder-image {
+
   width: 100%;
+
   height: 380px;
+
   border-radius: 20px;
+
   display: block;
+
 }
 
+
+
 .folder-content {
+
   position: absolute;
+
   inset: 0;
+
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   justify-content: center;
+
   text-align: center;
+
   pointer-events: none;
+
 }
+
+
+
+
+
+
+
+.resize-handle {
+
+  position: absolute;
+
+  right: 0;
+
+  bottom: 0;
+
+  width: 20px;
+
+  height: 20px;
+
+  cursor: nwse-resize;
+
+  background: linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, 0.1) 50%);
+
+  border-radius: 0 0 18px 0;
+
+}
+
+
+
+
+
+/* ===== WINDOWS ===== */
+
+.window {
+
+  position: fixed;
+
+  top: 8vh;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: min(900px, 90vw);
+
+  height: min(70vh, 700px);
+
+  background: #f8f5f2;
+
+  border-radius: 18px;
+
+  box-shadow: 0 30px 70px rgba(0, 0, 0, .2);
+
+  display: none;
+
+  z-index: 50;
+
+}
+
+
+
+
+
+.window.preview {
+
+  width: min(580px, 40vw);
+  /* This ensures they never take up more than 40% of the screen */
+
+  height: min(420px, 52vh);
+
+}
+
+
+
+.window-bar {
+
+  display: flex;
+
+  align-items: center;
+
+  padding: .75rem 1rem;
+
+  font-size: .75rem;
+
+  letter-spacing: .08em;
+
+  text-transform: uppercase;
+
+  opacity: .7;
+
+  border-bottom: 1px solid rgba(0, 0, 0, .08);
+
+}
+
+
+
+.window-mode {
+
+  margin-left: auto;
+
+  margin-right: .75rem;
+
+  font-size: .65rem;
+
+}
+
+
+
+.window-body {
+
+  padding: 2rem;
+
+  height: calc(100% - 48px);
+
+  overflow-y: auto;
+
+  max-width: 640px;
+
+  margin: 0 auto;
+
+}
+
+
+
+
+
+.dock-item {
+
+  padding: .45rem .8rem;
+
+
+
+  font-size: .68rem;
+
+  letter-spacing: .08em;
+
+  text-transform: uppercase;
+
+
+
+  border-radius: 999px;
+
+
+
+  background: rgba(248, 245, 242, .75);
+
+  backdrop-filter: blur(6px);
+
+
+
+  box-shadow:
+
+    0 6px 14px rgba(0, 0, 0, .08),
+
+    inset 0 1px rgba(255, 255, 255, .7);
+
+
+
+  color: #5a5754;
+
+
+
+  cursor: pointer;
+
+
+
+  transition:
+
+    transform .28s cubic-bezier(.2, .8, .2, 1),
+
+    box-shadow .28s ease,
+
+    background .28s ease;
+
+}
+
+
+
+
+
+/* ===== ABOUT LAYOUT ===== */
+
+
+
+.about-layout h4 {
+
+  margin-top: 1.6rem;
+
+  font-size: .75rem;
+
+  letter-spacing: .08em;
+
+  text-transform: uppercase;
+
+  opacity: .6;
+
+}
+
+
+
+.about-hero {
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+  gap: 2rem;
+
+  align-items: center;
+
+  margin-bottom: 4rem;
+
+}
+
+
+
+.about-title {
+
+  font-size: 3rem;
+
+  line-height: 1.05;
+
+  letter-spacing: -0.02em;
+
+  margin: 0 0 .6rem;
+
+}
+
+
+
+.about-tag {
+
+  font-size: 1.1rem;
+
+  line-height: 1.6;
+
+  max-width: 28ch;
+
+  opacity: .8;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+.profile-photo {
+
+  width: 100%;
+
+  max-width: 300px;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  box-shadow:
+
+    0 20px 40px rgba(0, 0, 0, .08),
+
+    inset 0 1px rgba(255, 255, 255, .6);
+
+}
+
+
+
+.profile-photo img {
+
+  width: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+}
+
+
+
+.about-title {
+
+  font-size: 3rem;
+
+  line-height: 1.05;
+
+  letter-spacing: -0.02em;
+
+  margin: 0 0 .6rem;
+
+}
+
+
+
+.about-tag {
+
+  font-size: 1.1rem;
+
+  line-height: 1.6;
+
+  max-width: 28ch;
+
+  opacity: .8;
+
+}
+
+
+
+
+
+
+
+
+
+.about-intro {
+
+  flex: 1;
+
+  font-size: 1rem;
+
+  line-height: 1.65;
+
+  padding-top: .4rem;
+
+}
+
+
+
+
+
+
+
+
+
+/* ===== CLOSE ICON ===== */
+
+.window-bar .close {
+
+  background: none;
+
+  border: none;
+
+  font-size: .9rem;
+
+  cursor: pointer;
+
+  opacity: .35;
+
+  transition: opacity .25s ease, transform .25s ease;
+
+}
+
+
+
+.window:hover .close {
+
+  opacity: .55;
+
+}
+
+
+
+.window-bar .close:hover {
+
+  opacity: .9;
+
+  transform: scale(1.5);
+
+}
+
+
+
+/* ===== DOCK ===== */
+
+.window-dock {
+
+  position: fixed;
+
+  bottom: 32px;
+
+  right: 32px;
+
+
+
+  display: flex;
+
+  gap: 10px;
+
+
+
+  z-index: 500;
+
+  pointer-events: auto;
+
+
+
+}
+
+
+
+
+
+/* SCROLL REVEAL */
+
+.reveal {
+
+  opacity: 0;
+
+  transform: translateY(14px);
+
+  transition:
+
+    opacity .6s cubic-bezier(.2, .8, .2, 1),
+
+    transform .6s cubic-bezier(.2, .8, .2, 1);
+
+}
+
+
+
+.reveal.show {
+
+  opacity: 1;
+
+  transform: translateY(0);
+
+}
+
+
+
+
+
+
+
+/* ==============================
+
+FINDER FILE SYSTEM
+
+============================== */
+
+
+
+.work-layout {
+
+  display: grid;
+
+  grid-template-columns: 1fr 260px;
+
+  gap: 2rem;
+
+  height: 100%;
+
+}
+
+
+
+/* file grid */
+
+.file-grid {
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+
+  gap: 1.2rem;
+
+  align-content: start;
+
+}
+
+
+
+/* file item */
+
+.file-item {
+
+  cursor: pointer;
+
+  text-align: center;
+
+  padding: .6rem;
+
+  border-radius: 12px;
+
+  transition:
+
+    transform .22s ease,
+
+    background .22s ease,
+
+    box-shadow .22s ease;
+
+}
+
+
+
+.file-item:hover {
+
+  background: rgba(0, 0, 0, .04);
+
+  transform: translateY(-4px);
+
+}
+
+
+
+/* thumbnail */
+
+.file-thumb {
+
+  height: 80px;
+
+  border-radius: 10px;
+
+  overflow: hidden;
+
+  background: #eee;
+
+  margin-bottom: .45rem;
+
+}
+
+
+
+.file-thumb img {
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+}
+
+
+
+/* filename */
+
+.file-name {
+
+  font-size: .65rem;
+
+  letter-spacing: .05em;
+
+  opacity: .7;
+
+}
+
+
+
+
+
+/* ==============================
+
+PREVIEW PANEL
+
+============================== */
+
+
+
+.preview-panel {
+
+  border-left: 1px solid rgba(0, 0, 0, .08);
+
+  padding-left: 1.2rem;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: .6rem;
+
+}
+
+
+
+.preview-media {
+
+  height: 120px;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  background: #ddd;
+
+}
+
+
+
+.preview-media img {
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  opacity: 0;
+
+  transition: opacity .25s ease;
+
+}
+
+
+
+.preview-media img.loaded {
+
+  opacity: 1;
+
+}
+
+
+
+.preview-title {
+
+  font-size: .9rem;
+
+  margin: 0;
+
+}
+
+
+
+.preview-desc {
+
+  font-size: .75rem;
+
+  line-height: 1.4;
+
+  opacity: .75;
+
+}
+
+
+
+.preview-meta {
+
+  font-size: .65rem;
+
+  opacity: .6;
+
+}
+
+
+
+.file-item:active {
+
+  transform: scale(.96);
+
+}
+
+
+
+.file-item {
+
+  backdrop-filter: blur(4px);
+
+}
+
+
+
+
+
+.preview-media img {
+
+  opacity: 0;
+
+  transition: opacity .25s ease;
+
+}
+
+
+
+.preview-media img.loaded {
+
+  opacity: 1;
+
+}
+
+
+
+
+
+
+
+/* ==============================
+
+WORK WINDOW
+
+============================== */
+
+
+
+
+
+.window.workspace.dimmed {
+
+  filter: blur(8px) brightness(.98) saturate(.95);
+
+  transform: scale(.97);
+
+  transition:
+
+    filter .6s cubic-bezier(.2, .8, .2, 1),
+
+    transform .6s cubic-bezier(.2, .8, .2, 1);
+
+}
+
+
+
+.desktop-icons {
+
+  position: absolute;
+
+  top: 40px;
+
+  right: 40px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 30px;
+
+}
+
+
+
+.shortcut {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  cursor: pointer;
+
+  width: 80px;
+
+}
+
+
+
+.icon-box {
+
+  width: 60px;
+
+  height: 60px;
+
+  background: rgba(255, 255, 255, 0.4);
+
+  backdrop-filter: blur(10px);
+
+  border-radius: 12px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 2rem;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
+  transition: transform 0.2s;
+
+}
+
+
+
+.shortcut:hover .icon-box {
+
+  transform: scale(1.1);
+
+  background: rgba(255, 255, 255, 0.6);
+
+}
+
+
+
+.shortcut span {
+
+  font-size: 0.7rem;
+
+  margin-top: 8px;
+
+  color: #5a5754;
+
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+
+}
+
+
+
+/* Grab hand for moving windows */
+
+.window-bar {
+
+  cursor: grab;
+
+}
+
+
+
+.window-bar:active {
+
+  cursor: grabbing;
+
+}
+
+
+
+/* Magnifying glass for images */
+
+.file-thumb img,
+
+.profile-photo img {
+
+  cursor: zoom-in;
+
+}
+
+
+
+/* Hovering over clickable desktop items */
+
+.back-card,
+
+.shortcut,
+
+.close {
+
+  cursor: pointer;
+
+}
+
+
+
+/* ==============================
+
+WORK WINDOW DIMMING
+
+============================== */
+
+
+
+/* Apply this to your workspace windows (the ones that hold the files) */
+
+.window.workspace {
+
+  transition:
+
+    filter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+
+    transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+
+    opacity 0.6s ease;
+
+}
+
+
+
+/* This is the state triggered by your JavaScript */
+
+.window.workspace.dimmed {
+
+  filter: blur(8px) brightness(0.9) saturate(0.8);
+
+  transform: scale(0.96);
+
+  /* Subtle push-back effect */
+
+  pointer-events: none;
+
+  /* Prevents clicking files while a project is open */
+
+  opacity: 0.7;
+
+  /* Optional: makes the background feel recessed */
+
+}
+
+
+
+
+
+/* The invisible clickable area over dimmed windows */
+
+.workspace-overlay {
+
+  position: absolute;
+
+  inset: 0;
+
+  /* covers the whole window */
+
+  z-index: 10;
+
+  /* sits above the files, but below the project window */
+
+  cursor: zoom-out;
+
+  display: none;
+
+}
+
+
+
+/* Show it only when the workspace is dimmed */
+
+.workspace.dimmed .workspace-overlay {
+
+  display: block;
+
+}
+
+
+
+
+
+/* ===== STACKED SYSTEM TOASTS ===== */
+
+.ui-toast {
+
+  position: fixed;
+
+  bottom: 28px;
+
+  left: 28px;
+
+  width: 300px;
+
+  padding: 0.9rem 1.1rem;
+
+  background: rgba(248, 245, 242, 0.96);
+
+  backdrop-filter: blur(8px);
+
+  border-radius: 16px;
+
+  font-size: 0.8rem;
+
+  line-height: 1.45;
+
+  letter-spacing: 0.02em;
+
+  box-shadow:
+
+    0 18px 40px rgba(0, 0, 0, 0.10),
+
+    0 4px 10px rgba(0, 0, 0, 0.06);
+
+  opacity: 0;
+
+  transform: translateX(-20px);
+
+  transition:
+
+    transform .32s cubic-bezier(.2, .8, .2, 1),
+
+    opacity .28s ease,
+
+    bottom .32s cubic-bezier(.2, .8, .2, 1);
+
+  z-index: 999;
+
+}
+
+
+
+.ui-toast.show {
+
+  opacity: 1;
+
+  transform: translateX(0);
+
+}
+
+
+
+
+
+
+
+/* ==============================
+
+ANIMATIONS & SCROLLBARS
+
+============================== */
+
+
+
+
+
+/* ===== INVISIBLE SCROLL ===== */
+
+
+
+.window-body {
+
+  overflow-y: auto;
+
+
+
+  /* Firefox */
+
+  scrollbar-width: none;
+
+
+
+  /* IE/Edge legacy */
+
+  -ms-overflow-style: none;
+
+}
+
+
+
+/* Chrome / Safari / Edge */
+
+.window-body::-webkit-scrollbar {
+
+  width: 0;
+
+  height: 0;
+
+}
+
+
+
+/* ===== MISSING INTERACTION CLASSES ===== */
+
+
+
+/* subtle depth shift for card stack when windows open */
+
+.card-stack.depth-shift {
+
+  transform: translateY(-12px) scale(0.992);
+
+}
+
+
+
+/* quick focus pulse for windows */
+
+.focus-pulse {
+
+  animation: focusPulse .26s cubic-bezier(.2, .8, .2, 1) both;
+
+}
+
+
+
+@keyframes focusPulse {
+
+  0% {
+
+    transform: scale(1) translateY(0);
+
+  }
+
+
+
+  50% {
+
+    transform: scale(1.02) translateY(-6px);
+
+  }
+
+
+
+  100% {
+
+    transform: scale(1) translateY(0);
+
+  }
+
+}
+
+
+
+/* folder wiggle used briefly on load */
+
+.wiggle {
+
+  animation: wiggle .6s ease both;
+
+}
+
+
+
+@keyframes wiggle {
+
+  0% {
+
+    transform: rotate(0deg);
+
+  }
+
+
+
+  25% {
+
+    transform: rotate(-2deg);
+
+  }
+
+
+
+  75% {
+
+    transform: rotate(1.2deg);
+
+  }
+
+
+
+  100% {
+
+    transform: rotate(0deg);
+
+  }
+
+}
+
+
+
+/* gentle breathe animation for folder when windows change */
+
+.folder-breathe {
+
+  animation: breathe 1s ease-in-out both;
+
+}
+
+
+
+@keyframes breathe {
+
+  0% {
+
+    transform: translateY(0);
+
+  }
+
+
+
+  50% {
+
+    transform: translateY(-8px);
+
+  }
+
+
+
+  100% {
+
+    transform: translateY(0);
+
+  }
+
+}
+
 
 /* ==============================
       PROJECT CASE STUDY STYLES
@@ -189,6 +1452,28 @@ body {
   color: #7a7570;
   margin-bottom: 2.5rem;
   line-height: 1.5;
+}
+
+.project-header {
+  background: radial-gradient(circle at top left, rgba(255, 230, 210, 0.3), transparent 70%);
+  padding: 4rem 3rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+
+.project-section h4 {
+  font-family: 'Merriweather', serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #c4b5a8;
+  /* A soft clay color */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  text-transform: none;
+  /* Keep it lowercase/italic for a softer look */
 }
 
 /* Section styling */
@@ -233,25 +1518,39 @@ body {
   margin-top: 1rem;
 }
 
-.project-header {
-  background: radial-gradient(circle at top left, rgba(255, 230, 210, 0.3), transparent 70%);
-  padding: 4rem 3rem;
-  border-radius: 12px;
-  margin-bottom: 2rem;
+.tag {
+  font-size: 0.7rem;
+  padding: 4px 12px;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 99px;
+  color: #7a7570;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.project-section h4 {
-  font-family: 'Merriweather', serif;
-  font-style: italic;
-  font-size: 1.2rem;
-  color: #c4b5a8;
-  /* A soft clay color */
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  padding-bottom: 0.5rem;
-  display: inline-block;
-  margin-bottom: 1.5rem;
-  text-transform: none;
-  /* Keep it lowercase/italic for a softer look */
+/* Layout for Logo + Title */
+.brand-group {
+  display: flex;
+  align-items: center;
+  /* Vertical center */
+  gap: 12px;
+  /* Space between logo and text */
+  margin-bottom: 0.5rem;
+}
+
+.project-logo {
+  width: 52px;
+  /* Small, subtle size */
+  height: 52px;
+  object-fit: contain;
+  border-radius: 6px;
+  /* Optional: gives it a "squircle" app-icon look */
+}
+
+/* Ensure the title doesn't have extra bottom margin now */
+.brand-group h2 {
+  margin: 0 !important;
+  font-size: 2.2rem;
+  /* Adjusted slightly for the logo pairing */
 }
 
 .grid-layout {
@@ -283,748 +1582,74 @@ body {
     0 1px 2px var(--lumify-peach);
   /* uses the peach for a subtle glow */
 
-  .side-note {
-    /* Colors & Glass Effect */
-    background: rgba(255, 255, 255, 0.7);
-    /* Translucent white */
-    backdrop-filter: blur(12px);
-    /* Frosted glass effect */
-    -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(244, 232, 224, 0.5);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  /* Makes it feel like part of the glass UI */
+  box-shadow: 0 15px 35px rgba(244, 232, 224, 0.2);
+  /* Peach-tinted shadow */
+}
+}
 
-    /* Layout & Spacing */
-    padding: 1.5rem;
-    border-radius: 16px;
-    font-size: 0.88rem;
-    line-height: 1.5;
+/* Also style the Insight Label to match the dynamic text style we made */
+.note-label {
+  font-family: 'Merriweather', serif;
+  font-style: italic;
+  color: #c4b5a8;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+  display: block;
+}
 
-    /* Branding: The "Clay" accent from your logo */
-    border-left: 4px solid #f4e8e0;
-    border-top: 1px solid rgba(255, 255, 255, 0.6);
-    border-right: 1px solid rgba(0, 0, 0, 0.02);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.02);
 
-    /* Shadow: A soft peach "Bloom" */
-    box-shadow:
-      0 20px 40px rgba(244, 232, 224, 0.25),
-      0 1px 2px rgba(0, 0, 0, 0.05);
-
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  /* Subtle interaction when the user hovers over the insight */
-  .side-note:hover {
-    transform: translateY(-4px) rotate(1deg);
-    /* Slight "paper" tilt */
-    box-shadow: 0 25px 50px rgba(244, 232, 224, 0.4);
-  }
-
-  /* Typography for the Insight Label */
-  .note-label {
-    font-family: 'Merriweather', serif;
-    font-style: italic;
-    font-size: 0.8rem;
-    color: #c4b5a8;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-
-  /* Also style the Insight Label to match the dynamic text style we made */
-  .note-label {
-    font-family: 'Merriweather', serif;
-    font-style: italic;
-    color: #c4b5a8;
-    letter-spacing: 0.05em;
-    margin-bottom: 0.25rem;
-    display: block;
-  }
-
-  /* ==============================
+/* ==============================
      ANIMATED LUMIFY HERO (BEAM)
 ============================== */
 
-  @keyframes gradientBeam {
-    0% {
-      background-position: 0% 50%;
-    }
-
-    50% {
-      background-position: 100% 50%;
-    }
-
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-  .project-header {
-    /* 1. Higher Saturation & More Stops */
-    background: linear-gradient(-45deg,
-        rgba(255, 218, 185, 0.5) 0%,
-        /* Richer Peach */
-        rgba(245, 241, 238, 0.2) 25%,
-        /* Neutral break */
-        rgba(230, 225, 240, 0.5) 50%,
-        /* Soft Lavender */
-        rgba(245, 241, 238, 0.2) 75%,
-        /* Neutral break */
-        rgba(255, 218, 185, 0.5) 100%
-        /* Back to Peach */
-      );
-
-    /* 2. Smaller background-size makes the movement more obvious */
-    background-size: 300% 300%;
-
-    /* 3. Faster Timing (8 seconds instead of 15) */
-    animation: gradientBeam 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-
-    /* 4. Glassmorphism Polish */
-    padding: 4rem 3rem;
-    border-radius: 20px;
-    margin-bottom: 2rem;
-    box-shadow:
-      inset 0 0 40px rgba(255, 255, 255, 0.5),
-      /* Inner glow */
-      0 10px 30px rgba(0, 0, 0, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .tag {
-    font-size: 0.7rem;
-    padding: 4px 12px;
-    background: rgba(0, 0, 0, 0.03);
-    border-radius: 99px;
-    color: #7a7570;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-  }
-
-  /* Layout for Logo + Title */
-  .brand-group {
-    display: flex;
-    align-items: center;
-    /* Vertical center */
-    gap: 12px;
-    /* Space between logo and text */
-    margin-bottom: 0.5rem;
-  }
-
-  .project-logo {
-    width: 52px;
-    /* Small, subtle size */
-    height: 52px;
-    object-fit: contain;
-    border-radius: 6px;
-    /* Optional: gives it a "squircle" app-icon look */
-  }
-
-  /* Ensure the title doesn't have extra bottom margin now */
-  .brand-group h2 {
-    margin: 0 !important;
-    font-size: 2.2rem;
-    /* Adjusted slightly for the logo pairing */
-  }
-
-  .resize-handle {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 20px;
-    height: 20px;
-    cursor: nwse-resize;
-    background: linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, 0.1) 50%);
-    border-radius: 0 0 18px 0;
-  }
-
-
-  /* ===== WINDOWS ===== */
-  /* This forces the window to be a floating box, not a text block */
-  .window {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    /* Centers it initially */
-    display: none;
-    /* JS will handle showing it */
-
-    background: #f8f5f2;
-    border-radius: 18px;
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.2);
-
-    width: min(900px, 90vw);
-    height: min(700px, 80vh);
-    /* Keeps it from stretching forever */
-    z-index: 100;
-    overflow: hidden;
-    /* Clips the content to the corners */
-  }
-
-
-  .window.preview {
-    width: min(580px, 40vw);
-    /* This ensures they never take up more than 40% of the screen */
-    height: min(420px, 52vh);
-  }
-
-  .window-bar {
-    display: flex;
-    align-items: center;
-    padding: .75rem 1rem;
-    font-size: .75rem;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    opacity: .7;
-    border-bottom: 1px solid rgba(0, 0, 0, .08);
-  }
-
-  .window-mode {
-    margin-left: auto;
-    margin-right: .75rem;
-    font-size: .65rem;
-  }
-
-  .window-body {
-    padding: 2rem;
-    height: calc(100% - 48px);
-    overflow-y: auto;
-    max-width: 640px;
-    margin: 0 auto;
-  }
-
-
-  .dock-item {
-    padding: .45rem .8rem;
-
-    font-size: .68rem;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-
-    border-radius: 999px;
-
-    background: rgba(248, 245, 242, .75);
-    backdrop-filter: blur(6px);
-
-    box-shadow:
-      0 6px 14px rgba(0, 0, 0, .08),
-      inset 0 1px rgba(255, 255, 255, .7);
-
-    color: #5a5754;
-
-    cursor: pointer;
-
-    transition:
-      transform .28s cubic-bezier(.2, .8, .2, 1),
-      box-shadow .28s ease,
-      background .28s ease;
-  }
-
-
-  /* ===== ABOUT LAYOUT ===== */
-
-  .about-layout h4 {
-    margin-top: 1.6rem;
-    font-size: .75rem;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    opacity: .6;
-  }
-
-  .about-hero {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    align-items: center;
-    margin-bottom: 4rem;
-  }
-
-  .about-title {
-    font-size: 3rem;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin: 0 0 .6rem;
-  }
-
-  .about-tag {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    max-width: 28ch;
-    opacity: .8;
-  }
-
-
-
-
-
-  .profile-photo {
-    width: 100%;
-    max-width: 300px;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow:
-      0 20px 40px rgba(0, 0, 0, .08),
-      inset 0 1px rgba(255, 255, 255, .6);
-  }
-
-  .profile-photo img {
-    width: 100%;
-    display: block;
-    object-fit: cover;
-  }
-
-  .about-title {
-    font-size: 3rem;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin: 0 0 .6rem;
-  }
-
-  .about-tag {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    max-width: 28ch;
-    opacity: .8;
-  }
-
-
-
-
-  .about-intro {
-    flex: 1;
-    font-size: 1rem;
-    line-height: 1.65;
-    padding-top: .4rem;
-  }
-
-
-
-
-  /* ===== CLOSE ICON ===== */
-  .window-bar .close {
-    background: none;
-    border: none;
-    font-size: .9rem;
-    cursor: pointer;
-    opacity: .35;
-    transition: opacity .25s ease, transform .25s ease;
-  }
-
-  .window:hover .close {
-    opacity: .55;
-  }
-
-  .window-bar .close:hover {
-    opacity: .9;
-    transform: scale(1.5);
-  }
-
-  /* ===== DOCK ===== */
-  .window-dock {
-    position: fixed;
-    bottom: 32px;
-    right: 32px;
-
-    display: flex;
-    gap: 10px;
-
-    z-index: 500;
-    pointer-events: auto;
-
-  }
-
-
-  /* SCROLL REVEAL */
-  .reveal {
-    opacity: 0;
-    transform: translateY(14px);
-    transition:
-      opacity .6s cubic-bezier(.2, .8, .2, 1),
-      transform .6s cubic-bezier(.2, .8, .2, 1);
-  }
-
-  .reveal.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-
-
-  /* ==============================
-   FINDER FILE SYSTEM
-============================== */
-
-  .work-layout {
-    display: grid;
-    grid-template-columns: 1fr 260px;
-    gap: 2rem;
-    height: 100%;
-  }
-
-  /* file grid */
-  .file-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 1.2rem;
-    align-content: start;
-  }
-
-  /* file item */
-  .file-item {
-    cursor: pointer;
-    text-align: center;
-    padding: .6rem;
-    border-radius: 12px;
-    transition:
-      transform .22s ease,
-      background .22s ease,
-      box-shadow .22s ease;
-  }
-
-  .file-item:hover {
-    background: rgba(0, 0, 0, .04);
-    transform: translateY(-4px);
-  }
-
-  /* thumbnail */
-  .file-thumb {
-    height: 80px;
-    border-radius: 10px;
-    overflow: hidden;
-    background: #eee;
-    margin-bottom: .45rem;
-  }
-
-  .file-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* filename */
-  .file-name {
-    font-size: .65rem;
-    letter-spacing: .05em;
-    opacity: .7;
-  }
-
-
-  /* ==============================
-   PREVIEW PANEL
-============================== */
-
-  .preview-panel {
-    border-left: 1px solid rgba(0, 0, 0, .08);
-    padding-left: 1.2rem;
-    display: flex;
-    flex-direction: column;
-    gap: .6rem;
-  }
-
-  .preview-media {
-    height: 120px;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #ddd;
-  }
-
-  .preview-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity .25s ease;
-  }
-
-  .preview-media img.loaded {
-    opacity: 1;
-  }
-
-  .preview-title {
-    font-size: .9rem;
-    margin: 0;
-  }
-
-  .preview-desc {
-    font-size: .75rem;
-    line-height: 1.4;
-    opacity: .75;
-  }
-
-  .preview-meta {
-    font-size: .65rem;
-    opacity: .6;
-  }
-
-  .file-item:active {
-    transform: scale(.96);
-  }
-
-  .file-item {
-    backdrop-filter: blur(4px);
-  }
-
-
-  .preview-media img {
-    opacity: 0;
-    transition: opacity .25s ease;
-  }
-
-  .preview-media img.loaded {
-    opacity: 1;
-  }
-
-
-
-  /* ==============================
-            WORK WINDOW
-  ============================== */
-
-
-  .window.workspace.dimmed {
-    filter: blur(8px) brightness(.98) saturate(.95);
-    transform: scale(.97);
-    transition:
-      filter .6s cubic-bezier(.2, .8, .2, 1),
-      transform .6s cubic-bezier(.2, .8, .2, 1);
-  }
-
-  .desktop-icons {
-    position: absolute;
-    top: 40px;
-    right: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
-
-  .shortcut {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    width: 80px;
-  }
-
-  .icon-box {
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(10px);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s;
-  }
-
-  .shortcut:hover .icon-box {
-    transform: scale(1.1);
-    background: rgba(255, 255, 255, 0.6);
-  }
-
-  .shortcut span {
-    font-size: 0.7rem;
-    margin-top: 8px;
-    color: #5a5754;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-  }
-
-  /* Grab hand for moving windows */
-  .window-bar {
-    cursor: grab;
-  }
-
-  .window-bar:active {
-    cursor: grabbing;
-  }
-
-  /* Magnifying glass for images */
-  .file-thumb img,
-  .profile-photo img {
-    cursor: zoom-in;
-  }
-
-  /* Hovering over clickable desktop items */
-  .back-card,
-  .shortcut,
-  .close {
-    cursor: pointer;
-  }
-
-
-
-  /* ==============================
-      WORK WINDOW DIMMING
-============================== */
-
-  /* Apply this to your workspace windows (the ones that hold the files) */
-  .window.workspace {
-    transition:
-      filter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
-      transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
-      opacity 0.6s ease;
-  }
-
-  /* This is the state triggered by your JavaScript */
-  .window.workspace.dimmed {
-    filter: blur(8px) brightness(0.9) saturate(0.8);
-    transform: scale(0.96);
-    /* Subtle push-back effect */
-    pointer-events: none;
-    /* Prevents clicking files while a project is open */
-    opacity: 0.7;
-    /* Optional: makes the background feel recessed */
-  }
-
-
-  /* The invisible clickable area over dimmed windows */
-  .workspace-overlay {
-    position: absolute;
-    inset: 0;
-    /* covers the whole window */
-    z-index: 10;
-    /* sits above the files, but below the project window */
-    cursor: zoom-out;
-    display: none;
-  }
-
-  /* Show it only when the workspace is dimmed */
-  .workspace.dimmed .workspace-overlay {
-    display: block;
-  }
-
-
-  /* ===== STACKED SYSTEM TOASTS ===== */
-  .ui-toast {
-    position: fixed;
-    bottom: 28px;
-    left: 28px;
-    width: 300px;
-    padding: 0.9rem 1.1rem;
-    background: rgba(248, 245, 242, 0.96);
-    backdrop-filter: blur(8px);
-    border-radius: 16px;
-    font-size: 0.8rem;
-    line-height: 1.45;
-    letter-spacing: 0.02em;
-    box-shadow:
-      0 18px 40px rgba(0, 0, 0, 0.10),
-      0 4px 10px rgba(0, 0, 0, 0.06);
-    opacity: 0;
-    transform: translateX(-20px);
-    transition:
-      transform .32s cubic-bezier(.2, .8, .2, 1),
-      opacity .28s ease,
-      bottom .32s cubic-bezier(.2, .8, .2, 1);
-    z-index: 999;
-  }
-
-  .ui-toast.show {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-
-
-  /* ==============================
-     ANIMATIONS & SCROLLBARS
-  ============================== */
-
-
-  /* ===== INVISIBLE SCROLL ===== */
-
-  .window-body {
-    padding: 2rem;
-    height: calc(100% - 48px);
-    /* Subtracts the window-bar height */
-    overflow-y: auto;
-    /* Allows scrolling inside! */
-
-    /* Optional: Custom scrollbar to keep it pretty */
-    scrollbar-width: thin;
-    scrollbar-color: #dcdada transparent;
-  }
-
-  /* Firefox */
-  scrollbar-width: none;
-
-  /* IE/Edge legacy */
-  -ms-overflow-style: none;
-}
-
-/* Chrome / Safari / Edge */
-.window-body::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
-
-/* ===== MISSING INTERACTION CLASSES ===== */
-
-/* subtle depth shift for card stack when windows open */
-.card-stack.depth-shift {
-  transform: translateY(-12px) scale(0.992);
-}
-
-/* quick focus pulse for windows */
-.focus-pulse {
-  animation: focusPulse .26s cubic-bezier(.2, .8, .2, 1) both;
-}
-
-@keyframes focusPulse {
+@keyframes gradientBeam {
   0% {
-    transform: scale(1) translateY(0);
+    background-position: 0% 50%;
   }
 
   50% {
-    transform: scale(1.02) translateY(-6px);
+    background-position: 100% 50%;
   }
 
   100% {
-    transform: scale(1) translateY(0);
+    background-position: 0% 50%;
   }
 }
 
-/* folder wiggle used briefly on load */
-.wiggle {
-  animation: wiggle .6s ease both;
-}
+.project-header {
+  /* 1. Higher Saturation & More Stops */
+  background: linear-gradient(-45deg,
+      rgba(255, 218, 185, 0.5) 0%,
+      /* Richer Peach */
+      rgba(245, 241, 238, 0.2) 25%,
+      /* Neutral break */
+      rgba(230, 225, 240, 0.5) 50%,
+      /* Soft Lavender */
+      rgba(245, 241, 238, 0.2) 75%,
+      /* Neutral break */
+      rgba(255, 218, 185, 0.5) 100%
+      /* Back to Peach */
+    );
 
-@keyframes wiggle {
-  0% {
-    transform: rotate(0deg);
-  }
+  /* 2. Smaller background-size makes the movement more obvious */
+  background-size: 300% 300%;
 
-  25% {
-    transform: rotate(-2deg);
-  }
+  /* 3. Faster Timing (8 seconds instead of 15) */
+  animation: gradientBeam 8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
 
-  75% {
-    transform: rotate(1.2deg);
-  }
-
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-/* gentle breathe animation for folder when windows change */
-.folder-breathe {
-  animation: breathe 1s ease-in-out both;
-}
-
-@keyframes breathe {
-  0% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-8px);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
+  /* 4. Glassmorphism Polish */
+  padding: 4rem 3rem;
+  border-radius: 20px;
+  margin-bottom: 2rem;
+  box-shadow:
+    inset 0 0 40px rgba(255, 255, 255, 0.5),
+    /* Inner glow */
+    0 10px 30px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  position: relative;
+  overflow: hidden;
 }
