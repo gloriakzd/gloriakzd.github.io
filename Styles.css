@@ -698,32 +698,26 @@ FINDER FILE SYSTEM
 
 
 
+/* This forces the two-column side-by-side layout */
 .work-layout {
-
-  display: grid;
-
-  grid-template-columns: 1fr 260px;
-
-  gap: 2rem;
-
+  display: flex;
+  /* Uses Flexbox to put items side-by-side */
+  gap: 20px;
   height: 100%;
-
+  align-items: stretch;
 }
 
 
 
 /* file grid */
-
+/* The Left Side (The Files) */
 .file-grid {
-
+  flex: 1;
+  /* Takes up the remaining space */
   display: grid;
-
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-
-  gap: 1.2rem;
-
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 1.5rem;
   align-content: start;
-
 }
 
 
@@ -815,19 +809,15 @@ PREVIEW PANEL
 ============================== */
 
 
-
+/* The Right Side (The Preview Sidebar) */
 .preview-panel {
-
-  border-left: 1px solid rgba(0, 0, 0, .08);
-
-  padding-left: 1.2rem;
-
+  width: 260px;
+  /* Fixed width like a real Mac sidebar */
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  padding-left: 20px;
   display: flex;
-
   flex-direction: column;
-
-  gap: .6rem;
-
+  gap: 12px;
 }
 
 
@@ -1258,22 +1248,12 @@ ANIMATIONS & SCROLLBARS
 
 
 
+/* Crucial: Keeps everything contained inside the window */
 .window-body {
-
-  overflow-y: auto;
-
-
-
-  /* Firefox */
-
-  scrollbar-width: none;
-
-
-
-  /* IE/Edge legacy */
-
-  -ms-overflow-style: none;
-
+  padding: 1.5rem;
+  height: calc(100% - 48px);
+  
+  /* Prevents the whole window from scrolling */
 }
 
 
