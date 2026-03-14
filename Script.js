@@ -214,3 +214,20 @@ document.addEventListener('DOMContentLoaded', () => {
   cards.forEach(card => card.addEventListener('click', e => { e.preventDefault(); openWindow(document.getElementById(card.dataset.window)); }));
   files.forEach(file => file.addEventListener('dblclick', () => openProjectWindow(file.dataset.project)));
 });
+
+
+
+
+
+
+// --- HMS Section Scroll Trigger ---
+  const problemObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+        }
+    });
+  }, { threshold: 0.2 });
+
+  const problemSection = document.querySelector('.problem-statement-section');
+  if (problemSection) problemObserver.observe(problemSection);
