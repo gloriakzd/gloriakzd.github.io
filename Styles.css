@@ -1252,7 +1252,7 @@ ANIMATIONS & SCROLLBARS
 .window-body {
   padding: 1.5rem;
   height: calc(100% - 48px);
-  
+
   /* Prevents the whole window from scrolling */
 }
 
@@ -1633,3 +1633,363 @@ ANIMATIONS & SCROLLBARS
   position: relative;
   overflow: hidden;
 }
+
+
+
+
+/* ==============================
+     PERSONA ICONS WITH HOVER TEXT
+============================== */
+/* Set a brand variable for the shadow color */
+:root {
+  --lumi-bloom: rgba(244, 232, 224, 0.6);
+  /* Soft clay/peach bloom */
+}
+
+.persona-section {
+  text-align: center;
+  margin: 60px auto;
+  /* Increased top/bottom margin for better rhythm */
+  max-width: 900px;
+  /* Widened slightly to accommodate bigger photos */
+  padding: 0 2rem;
+}
+
+.persona-section>p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 3.5rem;
+  /* Pushes the photos down */
+  max-width: 60ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.persona-icons {
+  display: flex;
+  justify-content: center;
+  /* Center the whole cluster */
+  gap: 3.5rem;
+  /* Fixed, generous gap between the photos */
+}
+
+.persona-icon-container {
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* --- THE BIG PROFILE PHOTO FIX --- */
+.persona-icon-container img {
+  /* Step 1: Significantly bigger scale */
+  width: 190px;
+
+  /* Step 2: Force a perfect squircle aspect ratio */
+  aspect-ratio: 1 / 1;
+  height: auto;
+  /* Required when using aspect-ratio */
+
+  /* Step 3: Crucial crop. Zooms in and centers the tall screenshot */
+  object-fit: cover;
+
+  /* Step 4: Perfect circle crop */
+  border-radius: 50%;
+
+  /* Step 5: Design Polish - Bloom Shadow */
+  border: 4px solid #fff;
+  /* White ring like a framed photo */
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.1),
+    /* Grounding shadow */
+    0 10px 25px var(--lumi-bloom);
+  /* Brand bloom */
+
+  transition:
+    transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.4s ease;
+}
+
+/* Step 6: Polished interaction - Lift & Intense Bloom */
+.persona-icon-container:hover img {
+  transform: translateY(-12px) scale(1.03);
+  /* Lifts higher and grows slightly */
+  box-shadow:
+    0 35px 60px rgba(0, 0, 0, 0.15),
+    0 15px 35px var(--lumi-bloom);
+  /* Shadow deepens with hover */
+}
+
+/* Polished Hover Text */
+.hover-text {
+  position: absolute;
+  top: 110%;
+  /* Place below photo */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(248, 245, 242, 0.96);
+  /* Matches your white background */
+  backdrop-filter: blur(8px);
+  /* Optional glass effect */
+  color: #5a5754;
+  padding: 8px 16px;
+  border-radius: 99px;
+  /* Pill shape */
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+}
+
+.persona-icon-container:hover .hover-text {
+  opacity: 1;
+  transform: translateX(-50%) translateY(5px);
+  /* Gentle slide-down */
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ==============================
+     PERSONA FLOATING WINDOW
+============================== */
+
+.floating-window {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /* Size Proportions */
+  width: min(600px, 90vw);
+  max-height: 85vh;
+
+  /* Glassmorphism Vibe */
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(25px) saturate(180%);
+  -webkit-backdrop-filter: blur(25px) saturate(180%);
+
+  /* Border & Radius */
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  /* The "Luminous" Bloom Shadow */
+  box-shadow:
+    0 40px 100px rgba(0, 0, 0, 0.15),
+    0 10px 30px rgba(244, 232, 224, 0.4);
+  /* Peach bloom */
+
+  z-index: 2000;
+  overflow: hidden;
+
+  /* Initial State for Animation */
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The "Pop-Up" Animation Trigger */
+.floating-window.active {
+  display: block;
+  pointer-events: auto;
+  animation: personaPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes personaPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -40%) scale(0.92);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Matching the "X" and Window Bar */
+.floating-window .window-bar {
+  background: rgba(0, 0, 0, 0.03);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.floating-window .window-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+}
+
+.floating-window .close-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.3;
+  transition: all 0.3s ease;
+}
+
+.floating-window .close-btn:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* Content Styling */
+.persona-content-area {
+  padding: 2.5rem;
+  overflow-y: auto;
+  max-height: calc(85vh - 60px);
+}
+
+.persona-content-area h3 {
+  font-family: 'Merriweather', serif;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #2b2b2b;
+}
+
+.persona-window-img {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+/* Bio Typography */
+.persona-window-bio h4 {
+  font-family: 'Merriweather', serif;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #a39e99;
+  margin: 1.5rem 0 0.8rem;
+}
+
+.tagline {
+  font-family: 'Merriweather', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #5a5754;
+  margin-bottom: 1.5rem;
+  padding-left: 12px;
+  border-left: 2px solid #f4e8e0;
+}
+
+/* --- 🌟 Progress Bars & Vibe Tags --- */
+.value-bar-container { margin-bottom: 1.5rem; }
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 8px;
+}
+
+.value-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4a4542;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.vibe-tag {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  background: rgba(212, 130, 87, 0.12);
+  color: #d48257;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-weight: 800;
+}
+
+.bar-bg {
+  width: 100%;
+  height: 12px;
+  background: rgba(0, 0, 0, 0.07);
+  border-radius: 20px;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #d48257 0%, #ff9d6e 100%);
+  width: 0;
+  border-radius: 20px;
+  position: relative;
+  transition: width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 0 15px rgba(212, 130, 87, 0.3);
+}
+
+.bar-star {
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  filter: drop-shadow(0 0 10px #ff9d6e);
+  animation: starPulse 2.5s infinite ease-in-out;
+}
+
+@keyframes starPulse {
+  0%, 100% { transform: translateY(-50%) scale(1); filter: brightness(1); }
+  50% { transform: translateY(-50%) scale(1.2); filter: brightness(1.3); }
+}
+
+.floating-window.active .bar-fill { width: var(--width); }
+
+/* --- 🌟 Lightbox Zoom Effect --- */
+.map-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(245, 241, 238, 0.98);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    cursor: zoom-out;
+}
+
+.map-lightbox.active { opacity: 1; }
+
+.lightbox-content {
+    width: 92vw;
+    transform: scale(0.95);
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.map-lightbox.active .lightbox-content { transform: scale(1); }
+
+.lightbox-content img { width: 100%; border-radius: 12px; box-shadow: 0 30px 80px rgba(0,0,0,0.1); }
+
+.close-lightbox { position: absolute; top: -50px; right: 0; background: none; border: none; font-size: 2.5rem; cursor: pointer; color: #4a4542; }
+
+/* Map Bottom Container */
+.journey-map-section {
+    margin-top: 3.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0,0,0,0.06);
+}
+.journey-map-section h4 { font-size: 0.7rem; text-transform: uppercase; color: #a39e99; margin-bottom: 1.5rem; }
+.map-container { border-radius: 16px; overflow: hidden; cursor: zoom-in; transition: transform 0.3s ease; border: 1px solid rgba(0,0,0,0.05); }
+.map-container:hover { transform: scale(1.01); }
