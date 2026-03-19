@@ -24,11 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
   let topZ = 100;
   let hoverTimeout;
 
+ 
+
+
   const projectData = {
     lumify: { title: "Lumify", desc: "A calm space for understanding your skin.", image: "Images/Lumify BG.png", meta: "UX · Branding · 2024" },
     myro: { title: "Myro", desc: "Reducing friction and guiding decisions.", image: "Images/Myro BG.png", meta: "UX · Web · 2023" },
     portfolio: { title: "This Portfolio", desc: "A spatial interface exploring focus.", image: "", meta: "Experimental · 2025" }
   };
+
 
   // --- 🌟 Vibe Labels & Terracotta Bar Helper ---
   function createValueBar(label, width) {
@@ -223,16 +227,16 @@ document.addEventListener('DOMContentLoaded', () => {
 // --- 🌟 FIXED: Animation Scroll Trigger (Watches EVERY section) ---
 const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-      if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          // Optional: once it's seen, stop watching to save battery/power
-          // sectionObserver.unobserve(entry.target); 
-      }
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      // Optional: once it's seen, stop watching to save battery/power
+      // sectionObserver.unobserve(entry.target); 
+    }
   });
 }, { threshold: 0.15 });
 
 // This finds EVERY section with 'animate-trigger' (Problems, Vision, Features)
 // and tells the browser to watch all of them!
 document.querySelectorAll('.animate-trigger').forEach(section => {
-    sectionObserver.observe(section);
+  sectionObserver.observe(section);
 });

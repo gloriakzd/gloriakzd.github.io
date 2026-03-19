@@ -368,6 +368,11 @@ body {
 
   overflow-y: auto;
 
+  display: block;
+  /* Ensures it behaves as a container */
+
+  position: relative;
+
   max-width: 640px;
 
   margin: 0 auto;
@@ -927,7 +932,83 @@ PREVIEW PANEL
 }
 
 
+/* ==============================
 
+ PHASE 03 FEAUTURES
+
+============================== */
+
+/* --- Phase 03: The Guide Stack --- */
+.guide-stack {
+  display: flex;
+  flex-direction: row;
+  /* Tightened to almost zero to give every pixel to the images */
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 2rem auto 0;
+  align-items: flex-start;
+  justify-content: center;
+  /* Removed side padding so they can push toward the edges */
+  padding: 0;
+}
+
+.guide-item {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.guide-img {
+  width: 100%;
+  height: auto;
+  display: block;
+
+  /* Strict "No Box" rules */
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background: transparent !important;
+
+  margin-bottom: 1rem;
+}
+
+/* --- THE FIX: Parent Container --- */
+/* This is likely what is stopping them from getting bigger. 
+   We need to make sure the window body itself isn't narrow. */
+#lumify-window .window-body {
+  max-width: 100% !important;
+  padding: 2rem 1rem;
+  /* Tightened side padding */
+}
+
+/* --- Text Alignment --- */
+.guide-overlay {
+  position: relative;
+  opacity: 1;
+  width: 100%;
+}
+
+.overlay-content h3 {
+  font-family: 'Merriweather', serif;
+  font-size: 1.1rem;
+  /* Shrink text slightly so it doesn't crowd the big images */
+  line-height: 1.2;
+  margin-bottom: 0.4rem;
+  color: #2b2b2b;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.overlay-content p {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: #5a5754;
+  margin: 0;
+}
 
 
 
