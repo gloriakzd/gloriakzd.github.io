@@ -220,14 +220,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-// --- HMS Section Scroll Trigger ---
-  const problemObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-        }
-    });
-  }, { threshold: 0.2 });
+// --- 🌟 FIXED: Animation Scroll Trigger (Watches EVERY section) ---
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+      if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          // Optional: once it's seen, stop watching to save battery/power
+          // sectionObserver.unobserve(entry.target); 
+      }
+  });
+}, { threshold: 0.15 });
 
-  const problemSection = document.querySelector('.problem-statement-section');
-  if (problemSection) problemObserver.observe(problemSection);
+// This finds EVERY section with 'animate-trigger' (Problems, Vision, Features)
+// and tells the browser to watch all of them!
+document.querySelectorAll('.animate-trigger').forEach(section => {
+    sectionObserver.observe(section);
+});
