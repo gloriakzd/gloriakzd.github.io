@@ -1,0 +1,43 @@
+body {
+    background-color: #fffbf2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+
+}
+
+
+
+/* ===== NAVGITATION BAR ===== */
+
+.navbar {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center; /* Centers the menu */
+}
+
+.navbar ul {
+    list-style-type: none; /* Removes bullet points */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 30px; /* Space between links */
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333; /* Dark grey for good contrast */
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* Hover effect */
+.navbar a:hover {
+    color: #d4a373; /* A soft gold/brown that pairs well with #fffbf2 */
+}
+
+/* The 'active' link style */
+nav a.active {
+    color: #d4a373; /* Using that warm gold we liked earlier */
+    border-bottom: 2px solid #d4a373;
+    padding-bottom: 5px;
+}
