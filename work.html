@@ -1,29 +1,118 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    
-
-    <title>Portfolio</title>
+    <title>My Work | Project Gallery</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
 
     <nav class="navbar">
-    <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html" >About Me</a></li>
-        <li><a href="work.html" class="active">My Archive/Work</a></li>
-        <li><a href="contact.html">Contact Me</a></li>
-    </ul>
-</nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Me</a></li>
+            <li><a href="work.html" class="active">My Archive/Work</a></li>
+            <li><a href="contact.html">Contact Me</a></li>
+        </ul>
+    </nav>
 
-<div class="container">
-    <h1>My Work</h1>
-    <p>Check out my latest projects and archives here.</p>
-    </div>
+    <main class="work-container">
+
+        <div class="gallery-text-content">
+            <h1>My Projects Spotlight</h1>
+            <p>Welcome to a curated showcase of my recent creative ventures. I've compiled my favorite illustration and
+                branding work into an interactive gallery.</p>
+            <p><strong>Click the arrow on the card stack</strong> to cycle through projects, or hover to see details.
+            </p>
+            <p class="navigation-symbol">&rarr;</p>
+        </div>
+
+        <div class="project-gallery">
+            <button class="stack-arrow" onclick="rotateStack()">&rsaquo;</button>
+
+            <div class="project-card active-card" id="card-1"
+                onclick="document.getElementById('bitter-details').scrollIntoView()">
+                <div class="card-image-wrapper">
+                    <img src="Images/Bitter/BitterPC.png" alt="BITTER fruity illustration project">
+                    <div class="image-overlay">
+                        <p>Fruity character design and typography study exploring expressive illustration.</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3>BITTER</h3>
+                </div>
+            </div>
+
+            <div class="project-card" id="card-2" onclick="document.getElementById('myro-details').scrollIntoView()">
+                <div class="card-image-wrapper">
+                    <img src="Images/Myro/MyroPC.png" alt="MYRO Parfum branding project">
+                    <div class="image-overlay">
+                        <p>Sophisticated branding and packaging concept for a luxury fragrance line.</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3>MYRO Parfum</h3>
+                </div>
+            </div>
+
+            <div class="project-card" id="card-3" onclick="document.getElementById('lumify-details').scrollIntoView()">
+                <div class="card-image-wrapper">
+                    <img src="Images/Lumify/LumifyPC.png" alt="LUMIFY app UI design and mascot">
+                    <div class="image-overlay">
+                        <p>UI/UX design and charming mascot creation for a modern productivity app.</p>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <h3>Lumify App</h3>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <section id="myro-details" class="myro-split-container">
+
+        <div class="myro-image-side">
+            <img src="Images/Myro/myroPackaging2.png" alt="Myro Parfum Bottle">
+        </div>
+
+        <div class="myro-content-pod">
+            <p style="letter-spacing: 3px; font-weight: bold; margin-bottom: 10px; color: #7a6e60;">WHO IS MYRO?</p>
+            <h2>MYRO <br> PARFUM</h2>
+
+            <p>
+                Myro is a modern fragrance and essential oil brand that helps
+                people feel grounded, refreshed, and connected through
+                scent-driven routines.
+            </p>
+
+            <p>
+                The brand focuses on minimalism, intentional living, and
+                mood-based aromas, creating products that turn everyday
+                care into a sensory experience.
+            </p>
+        </div>
+
+    </section>
+
+
+
+    <section id="lumify-details" style="padding: 100px 10%; background: #fff;">
+        <h2 style="font-family: 'Comic Sans MS', cursive; color: #9b84a0;">Lumify App Design</h2>
+        <p>This is where the Lumify character and UI breakdown lives...</p>
+    </section>
+
+    <section id="bitter-details" style="padding: 100px 10%; background: #fff;">
+        <h2 style="font-family: 'Comic Sans MS', cursive; color: #9b84a0;">Bitter</h2>
+        <p>This is where your high-res images, process sketches, and deep dives for BITTER go...</p>
+    </section>
+
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,43 +1,367 @@
+/* ===== GENERAL DEFAULTS ===== */
 body {
     background-color: #fffbf2;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-
-
-/* ===== NAVGITATION BAR ===== */
-
+/* ===== NAVIGATION BAR ===== */
 .navbar {
     padding: 1.5rem;
     display: flex;
-    justify-content: center; /* Centers the menu */
+    justify-content: center;
 }
 
 .navbar ul {
-    list-style-type: none; /* Removes bullet points */
+    list-style-type: none;
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 30px; /* Space between links */
+    gap: 30px;
 }
 
 .navbar a {
     text-decoration: none;
-    color: #333; /* Dark grey for good contrast */
+    color: #333;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
-/* Hover effect */
-.navbar a:hover {
-    color: #d4a373; /* A soft gold/brown that pairs well with #fffbf2 */
+.navbar a:hover,
+.navbar a.active {
+    color: #d4a373;
 }
 
-/* The 'active' link style */
-nav a.active {
-    color: #d4a373; /* Using that warm gold we liked earlier */
+.navbar a.active {
     border-bottom: 2px solid #d4a373;
     padding-bottom: 5px;
+}
+
+
+
+
+
+
+
+
+/* ===== SPLIT-SCREEN CONTAINER ===== */
+.work-container {
+    display: flex;
+    flex-direction: row;
+    /* Pushes text to the left and gallery to the right */
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    /* Extra side padding keeps it from hitting the very edge */
+    padding: 40px 10%;
+    box-sizing: border-box;
+}
+
+.gallery-text-content {
+    flex: 0 0 35%;
+    text-align: left;
+}
+
+/* === ENLARGED & REPOSITIONED GALLERY === */
+.project-gallery {
+    position: relative;
+    /* Matches the card width below */
+    flex: 0 0 600px;
+    height: 550px;
+    /* Nudges the whole stack down from the top */
+    margin-top: 80px;
+}
+
+/* === THE CARDS (Cleaned up duplicate) === */
+.project-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* Significantly bigger images */
+    width: 600px;
+    text-align: center;
+    transition: all 0.5s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Maintain active card visibility */
+.project-card.active-card {
+    opacity: 1;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+/* === ADJUSTED ARROW POSITION === */
+.stack-arrow {
+    position: absolute;
+    /* Positioned relative to the new 600px width */
+    right: -80px;
+    top: 40%;
+    background: #9b84a0;
+    color: white;
+    border: none;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    font-size: 2.5rem;
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.stack-arrow:hover {
+    transform: scale(1.1);
+    background: #d4a373;
+}
+
+/* --- REMOVED BORDERS & STYLE --- */
+.card-image-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    display: block;
+    transition: opacity 0.3s ease;
+}
+
+
+
+
+
+
+
+
+/* === HOVER OVERLAY (ON TOP CARD ONLY) === */
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 251, 242, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-card:hover .image-overlay {
+    opacity: 1;
+}
+
+.project-card:hover img {
+    opacity: 0.1;
+}
+
+.image-overlay p {
+    color: #4a3f4d;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.card-content h3 {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: 1.5rem;
+    color: #9b84a0;
+    margin-top: 20px;
+}
+
+
+
+/* ===== PHOTOCARD ANIMATION ===== */
+
+
+/* 1. Define the breathing motion */
+@keyframes breathe {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+
+    /* Slightly grows */
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* 2. Apply it to the active card on hover */
+.project-card.active-card:hover .card-image-wrapper {
+    animation: breathe 3s ease-in-out infinite;
+    cursor: pointer;
+}
+
+/* 3. Ensure the page scrolls smoothly */
+html {
+    scroll-behavior: smooth;
+}
+
+
+
+
+
+
+/* ===== MYRO PROJECT LAYOUT ===== */
+.project-detail-section {
+    padding: 120px 10%;
+    background-color: #fdfaf5;
+    /* A soft, warm off-white */
+    overflow: hidden;
+}
+
+.brand-intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.brand-text h2 {
+    font-family: 'Times New Roman', serif;
+    /* Or a premium serif you like */
+    font-size: 3.5rem;
+    letter-spacing: -1px;
+    margin-bottom: 2rem;
+    color: #2c241e;
+}
+
+.brand-text p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #5a5048;
+    max-width: 500px;
+    margin-bottom: 1.5rem;
+}
+
+/* === OVERLAPPING IMAGE COMPOSITION === */
+.image-composition {
+    position: relative;
+    height: 600px;
+}
+
+.comp-main-img {
+    width: 80%;
+    height: auto;
+    box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.05);
+    z-index: 2;
+    position: relative;
+}
+
+.comp-accent-img {
+    position: absolute;
+    bottom: -40px;
+    right: 0;
+    width: 50%;
+    z-index: 3;
+    border: 15px solid #fdfaf5;
+    /* Creates a frame effect */
+    box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Add a subtle fade-in animation */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+
+
+/* ===== MYRO SPLIT SECTION ===== */
+.myro-split-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #9a8e80;
+
+    /* === 1. SHRINK CONTAINER SIZE === */
+    min-height: 60vh;
+    /* Reduced from 80vh/100vh to make it shorter */
+    height: auto;
+    /* Allows it to hug the content */
+    /* Adds a little breathing room at top and bottom */
+    overflow: visible;
+    /* Changed from hidden so the image can "pop" out */
+}
+
+/* Left Side: Image Area */
+.myro-image-side {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    /* === 2. MOVE IMAGE UP === */
+    margin-top: -120px;
+    /* Pulls the image UP and out of the container */
+    padding: 0 50px;
+    z-index: 5;
+    /* Ensures it stays above any overlapping elements */
+}
+
+.myro-image-side img {
+    max-width: 75%;
+    /* Slightly smaller image for the smaller container */
+    height: auto;
+    filter: drop-shadow(20px 20px 50px rgba(0, 0, 0, 0.2));
+}
+
+/* Right Side: The Ellipse Content Area */
+.myro-content-pod {
+    flex: 1;
+    background-color: #d6cebe;
+
+    /* === 3. SHRINK POD HEIGHT === */
+    height: 550px;
+    /* Specific height to make the ellipse look tighter */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px;
+
+    border-top-left-radius: 100% 50%;
+    border-bottom-left-radius: 100% 50%;
+}
+
+.myro-content-pod h2 {
+    font-family: 'Playfair Display', serif;
+    /* Or your preferred elegant serif */
+    font-size: 3.5rem;
+    color: #4a3f4d;
+    /* Dark background color for text */
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.myro-content-pod p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #4a3f4d;
+    /* Dark background color for text */
+    max-width: 450px;
 }
