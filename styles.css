@@ -57,7 +57,9 @@ body {
     flex-grow: 1;
     /* Extra side padding keeps it from hitting the very edge */
     padding: 40px 10%;
+    margin-bottom: 150px;
     box-sizing: border-box;
+
 }
 
 .gallery-text-content {
@@ -101,7 +103,7 @@ body {
     /* Positioned relative to the new 600px width */
     right: -80px;
     top: 40%;
-    background: #9b84a0;
+    background: #785b4c;
     color: white;
     border: none;
     width: 55px;
@@ -291,12 +293,15 @@ html {
 
 
 
+
+
 /* ===== MYRO SPLIT SECTION ===== */
+
 .myro-split-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #9a8e80;
+    background-color: #fffbf2;
 
     /* === 1. SHRINK CONTAINER SIZE === */
     min-height: 60vh;
@@ -306,6 +311,7 @@ html {
     /* Adds a little breathing room at top and bottom */
     overflow: visible;
     /* Changed from hidden so the image can "pop" out */
+    margin-top: 50px;
 }
 
 /* Left Side: Image Area */
@@ -318,7 +324,7 @@ html {
     /* === 2. MOVE IMAGE UP === */
     margin-top: -120px;
     /* Pulls the image UP and out of the container */
-    padding: 0 50px;
+    padding: 100 0px;
     z-index: 5;
     /* Ensures it stays above any overlapping elements */
 }
@@ -330,38 +336,785 @@ html {
     filter: drop-shadow(20px 20px 50px rgba(0, 0, 0, 0.2));
 }
 
-/* Right Side: The Ellipse Content Area */
+
+
+
+
+/* Right Side: The Glassmorphism Square Pod */
 .myro-content-pod {
     flex: 1;
-    background-color: #d6cebe;
+    /* Glassmorphism Effect */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 
-    /* === 3. SHRINK POD HEIGHT === */
-    height: 550px;
-    /* Specific height to make the ellipse look tighter */
+    /* === SQUARE SHAPE EDITS === */
+    height: 500px;
+    /* Matching the tighter container size */
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 60px;
+    /* Balanced padding for a square */
 
-    border-top-left-radius: 100% 50%;
-    border-bottom-left-radius: 100% 50%;
+    border-radius: 20px;
+    /* Slight rounding for a modern "tech/luxury" look */
+
+    /* Pulling the square slightly over the taupe background */
+    margin-left: 5%;
+    margin-right: 0;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+
+    position: relative;
+    /* Required for the trapped light */
+    overflow: hidden;
+    /* Keeps the light "trapped" inside the square */
+    z-index: 10;
 }
 
+/* Typography Refresh for the Square Pod */
 .myro-content-pod h2 {
     font-family: 'Playfair Display', serif;
-    /* Or your preferred elegant serif */
-    font-size: 3.5rem;
-    color: #4a3f4d;
-    /* Dark background color for text */
-    margin-bottom: 20px;
+    font-size: 3rem;
+    color: #725c4e;
+    margin: 10px 0 20px 0;
+    line-height: 1.1;
     text-transform: uppercase;
-    letter-spacing: 2px;
 }
 
 .myro-content-pod p {
+    color: #725c4e;
+    /* Matching your new color */
+    font-size: 1.05rem;
+    line-height: 1.7;
+    position: relative;
+    z-index: 5;
+    opacity: 0.9;
+    /* Keeps it soft but readable */
+}
+
+.myro-content-pod span {
+    position: relative;
+    z-index: 5;
+    /* This pushes text ABOVE the moving light */
+    pointer-events: none;
+    /* Allows mouse to still hit the pod for the animation */
+}
+
+/* The Animated Brown Light Aura */
+.myro-content-pod::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    /* Switched to a softer, more subtle brown to protect readability */
+    background: radial-gradient(circle at center,
+            rgba(90, 80, 70, 0.35) 0%,
+            transparent 60%);
+    z-index: 2;
+    /* Sits between the pod background and the text */
+    pointer-events: none;
+
+    animation: lightDrift 15s ease-in-out infinite;
+    animation-play-state: var(--ani-state, running);
+    transform: translate(var(--x, 0%), var(--y, 0%));
+    transition: transform 0.2s ease-out;
+}
+
+@keyframes lightDrift {
+    0% {
+        transform: translate(-5%, -5%);
+    }
+
+    50% {
+        transform: translate(5%, 10%);
+    }
+
+    100% {
+        transform: translate(-5%, -5%);
+    }
+}
+
+/* Pure CSS fall-back animation if JS is disabled */
+@keyframes lightDrift {
+    0% {
+        transform: translate(-10%, -10%);
+    }
+
+    50% {
+        transform: translate(10%, 15%);
+    }
+
+    100% {
+        transform: translate(-10%, -10%);
+    }
+}
+
+.myro-content-pod::before {
+    animation: lightDrift 15s ease-in-out infinite;
+}
+
+
+
+
+
+
+
+
+/* ===== TYPOGRAPHY ===== */
+
+.typography-showcase {
+    padding: 120px 10%;
+    background-color: #fdfaf5;
+    border-top: 1px solid rgba(114, 92, 78, 0.1);
+    /* Subtle separator */
+}
+
+/* Header Section */
+.section-meta {
+    margin-bottom: 80px;
+}
+
+.meta-label {
+    display: block;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #9b84a0;
+    margin-bottom: 10px;
+}
+
+.typo-main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: #2c241e;
+    margin: 0;
+    /* Removed the border completely */
+}
+
+/* Main Content Grid */
+.typo-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1.2fr;
+    gap: 40px;
+    align-items: end;
+    /* Aligns everything to the bottom for a modern look */
+}
+
+/* The "Aa" */
+.big-a {
+    font-size: 16rem;
+    /* Even bigger for more impact */
+    font-family: 'Neue Haas Grotesk', 'Helvetica', sans-serif;
+    color: #725c4e;
+    opacity: 0.15;
+    /* Subtler, "ghosted" look is more modern */
+    line-height: 0.8;
+}
+
+/* Typography Copy */
+.font-spec {
+    margin-bottom: 30px;
+    border-left: 3px solid #725c4e;
+    padding-left: 15px;
+}
+
+.font-name {
+    font-weight: bold;
+    font-size: 1.4rem;
+    color: #2c241e;
+    margin: 0;
+}
+
+.font-purpose {
+    font-size: 0.9rem;
+    color: #9b84a0;
+    text-transform: uppercase;
+}
+
+.typo-narrative {
     font-size: 1.1rem;
     line-height: 1.8;
-    color: #4a3f4d;
-    /* Dark background color for text */
+    color: #5a5048;
     max-width: 450px;
+    margin-bottom: 20px;
+}
+
+/* Image Detail */
+.typo-visual img {
+    width: 100%;
+    filter: grayscale(20%);
+    /* Adds a moody, editorial feel */
+    transition: filter 0.5s ease;
+}
+
+.typo-visual:hover img {
+    filter: grayscale(0%);
+}
+
+
+
+
+
+
+/* ===== HIFI-FINAL REDESIGN ===== */
+
+.hifi-showcase {
+    padding: 120px 10%;
+    background-color: #fffbf2;
+    /* Back to the lighter cream for contrast */
+}
+
+.hifi-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: #2c241e;
+    margin-bottom: 40px;
+}
+
+.hifi-intro-text {
+    column-count: 2;
+    /* Editorial layout for longer text blocks */
+    column-gap: 60px;
+    margin-bottom: 80px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #5a5048;
+}
+
+/* The Comparison Layout */
+.comparison-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.comparison-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.version-tag {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #9b84a0;
+    margin-bottom: 20px;
+}
+
+/* Phone Mockup Style */
+.phone-frame {
+    width: 100%;
+    max-width: 350px;
+    border-radius: 40px;
+    overflow: hidden;
+    background: #000;
+    border: 8px solid #2c241e;
+    /* Minimal device frame */
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease;
+}
+
+.phone-frame img {
+    width: 100%;
+    display: block;
+}
+
+/* Highlight the "After" version */
+.phone-frame.high-end {
+    border-color: #725c4e;
+    /* Use your brand brown for the new version */
+    box-shadow: 0 40px 80px rgba(114, 92, 78, 0.2);
+    transform: scale(1.05);
+    /* Make the redesign slightly larger */
+}
+
+.comparison-arrow {
+    font-size: 3rem;
+    color: #725c4e;
+    opacity: 0.5;
+}
+
+/* Responsive fix for smaller screens */
+@media (max-width: 900px) {
+    .comparison-grid {
+        flex-direction: column;
+    }
+
+    .hifi-intro-text {
+        column-count: 1;
+    }
+
+    .comparison-arrow {
+        transform: rotate(90deg);
+    }
+}
+
+
+
+
+
+
+
+
+
+/* ===== LUMIFY ===== */
+
+
+.lumify-container {
+    padding: 100px 10%;
+    background: #f4f7f5;
+    /* A very soft, "clean" sage-white */
+    display: flex;
+    justify-content: center;
+}
+
+.lumify-glass-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 40px;
+    padding: 60px;
+    width: 100%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* Typography */
+.lumify-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    color: #3a4740;
+    /* Deep slate green */
+    margin: 20px 0;
+}
+
+.lumify-desc {
+    font-size: 1.2rem;
+    color: #5a6b62;
+    max-width: 400px;
+    margin-bottom: 40px;
+}
+
+/* Feature Pills Styling */
+.lumify-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.feature-pill {
+    padding: 12px 20px;
+    background: white;
+    border: 1px solid #e0e7e3;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    color: #3a4740;
+    cursor: help;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.feature-pill:hover {
+    background: #3a4740;
+    color: white;
+    transform: translateY(-5px);
+}
+
+/* Illustration Placeholder with a 'Pulse' to keep it interactive */
+.lumify-illustration-zone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.floating-orb {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(168, 204, 185, 0.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: floatOrb 6s infinite ease-in-out;
+}
+
+@keyframes floatOrb {
+
+    0%,
+    100% {
+        transform: scale(1) translate(0, 0);
+    }
+
+    50% {
+        transform: scale(1.1) translate(10px, -20px);
+    }
+}
+
+.illustration-placeholder {
+    border: 2px dashed #a8ccb9;
+    border-radius: 30px;
+    width: 80%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #a8ccb9;
+    z-index: 2;
+}
+
+
+
+
+
+
+/* ===== LUMIFY CONCEPT ===== */
+
+
+
+
+.lumify-deep-dive {
+    padding: 100px 10%;
+    background-color: #f4f7f5;
+    /* Lumify Sage-White */
+}
+
+/* Problem & Solution Grid */
+.process-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 80px;
+}
+
+.process-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 30px;
+    /* Matching the rounded coffee cards */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease;
+}
+
+
+/* Hover Interaction */
+.process-card:hover .card-icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+    background: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.process-card:hover .process-icon {
+    opacity: 1;
+}
+
+.process-icon {
+    width: 32px;
+    /* Adjust based on your icon size */
+    height: auto;
+    opacity: 0.8;
+}
+
+.card-tag {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #9b84a0;
+    margin-bottom: 15px;
+    display: block;
+}
+
+/* Ensuring the text stays balanced */
+.process-card h3 {
+    margin-top: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: #3a4740;
+}
+
+.solution-highlight {
+    background: #e0e7e3;
+    /* Light sage highlight for the solution */
+}
+
+/* Concept Description Area */
+.concept-section {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.concept-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: #2c241e;
+    margin-bottom: 30px;
+}
+
+.concept-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #5a6b62;
+    margin-bottom: 20px;
+}
+
+.visual-placeholder {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.visual-placeholder img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 50%;
+    /* Makes the image circular like the coffee cup in your ref */
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- THE PROFILE PHOTO CIRCLES --- */
+/* Container for the whole section */
+.problem-grid {
+    position: relative;
+    max-width: 900px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    padding-left: 40px;
+    /* Space for the vertical line */
+}
+
+/* Individual Card Layout */
+.problem-card {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.problem-illu {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.problem-illu img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: white;
+    border: 4px solid #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* The Number Badge (01, 02) */
+.index-num {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    background: #3a4740;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* Text Content Styling */
+.hms-content {
+    max-width: 500px;
+}
+
+.hmw-badge {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #9b84a0;
+    margin-bottom: 8px;
+}
+
+.hms-text {
+    font-size: 1.4rem;
+    line-height: 1.4;
+    color: #2c241e;
+}
+
+.highlight {
+    color: #a8ccb9;
+    /* Matches Lumify Sage */
+    font-weight: 600;
+}
+
+/* Ensure the Persona Area starts on a fresh line and is centered */
+.persona-area {
+    clear: both;
+    width: 100%;
+    padding: 100px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Centers the header */
+    background-color: #f4f7f5;
+    /* Gives it that distinct cream look from your shot */
+
+}
+
+.persona-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.persona-icon-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.persona-icon-container img {
+    width: 190px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+    /* Perfect Circle */
+    border: 4px solid #fff;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1), 0 10px 25px var(--lumi-bloom);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.persona-icon-container:hover img {
+    transform: translateY(-12px) scale(1.03);
+}
+
+/* The "Peach" leaf detail from your screenshot */
+.persona-icon-container::before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 10px;
+    width: 60px;
+    height: 40px;
+    background: url('Images/Personas/LeafDetail.png') no-repeat;
+    background-size: contain;
+    z-index: 2;
+}
+
+/* --- THE FLOATING HOVER TEXT --- */
+.hover-text {
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(248, 245, 242, 0.96);
+    backdrop-filter: blur(8px);
+    padding: 8px 16px;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.persona-icon-container:hover .hover-text {
+    opacity: 1;
+    transform: translateX(-50%) translateY(5px);
+}
+
+
+
+/* Vertical Pathway Line */
+/* The Vertical "Pathway" Line */
+.pathway-line {
+    position: absolute;
+    left: 70px;
+    /* Centers under the doodles */
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #e0e7e3, transparent);
+    z-index: 0;
+}
+
+/* The Doodles */
+.problem-illu img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+}
+
+/* The Glowing Highlight Text */
+.highlight {
+    color: #a8ccb9;
+    font-weight: 700;
+    background: linear-gradient(180deg, transparent 70%, rgba(244, 232, 224, 0.6) 0);
+}
+
+/* Animation for the pop-up effect */
+.floating-window {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%) scale(0.95);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 1000;
+    background: white;
+    width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 24px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+.floating-window.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Progress bar animation */
+.bar-fill {
+    height: 100%;
+    background: #d48257;
+    width: 0;
+    /* Starts at 0 */
+    transition: width 1s ease-out;
+}
+
+.floating-window.active .bar-fill {
+    width: var(--width);
+    /* Animates to the width set in JS */
 }
